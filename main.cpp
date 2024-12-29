@@ -1,4 +1,5 @@
 #include "data.hpp"
+#include "estatistica.hpp"
 #include <iostream>
 using namespace std;
 
@@ -18,7 +19,7 @@ bool game = true;
 
 /////////////////////////////////////
 void print(void) {
-	//Limpa a tela
+    //Limpa a tela
     system("cls");
     //Sua mão
     cout << "Sua mao: ";
@@ -44,15 +45,15 @@ void print(void) {
 int main() {
 
     //////////////////////////////////////
-	// Gera o universo
-	for (int i = 0; i < 4; i++) 
-		for (int j = 0; j < 10; j++) {
-			Folha newFolha(naipes[i], valores[j]);
-			hiddenFolhas.folhas.push_back(newFolha);
-		}
-	//Mostra o universo
-	cout << "Universo: ";
-	for (auto it = hiddenFolhas.folhas.begin(); it != hiddenFolhas.folhas.end(); it++) 
+    // Gera o universo
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 10; j++) {
+            Folha newFolha(naipes[i], valores[j]);
+            hiddenFolhas.folhas.push_back(newFolha);
+        }
+    //Mostra o universo
+    cout << "Universo: ";
+    for (auto it = hiddenFolhas.folhas.begin(); it != hiddenFolhas.folhas.end(); it++)
         cout << it->naipe << it->valor << " ";
     cout << endl;
     //////////////////////////////////////
@@ -61,7 +62,7 @@ int main() {
 
     /////////////////////////////////////
     //Cartas recebidas
-    for (int i = 0; i < 3; i++){
+    for (int i = 0; i < 3; i++) {
 
         char naipe; int valor;
 
@@ -73,16 +74,16 @@ int main() {
         Folha newFolha(naipe, valor);
 
         //Adicona a carta ao seu baralho
-		myBaralho.folhas.push_back(newFolha);
+        myBaralho.folhas.push_back(newFolha);
 
         //Remove a carta vista das não vistas
-		for (auto it = hiddenFolhas.folhas.begin(); it != hiddenFolhas.folhas.end(); it++) {
-			if (it->naipe == naipe && it->valor == valor) {
-				hiddenFolhas.folhas.erase(it);
-				cout << "Carta removida" << endl;
-				break;
-			}
-		}
+        for (auto it = hiddenFolhas.folhas.begin(); it != hiddenFolhas.folhas.end(); it++) {
+            if (it->naipe == naipe && it->valor == valor) {
+                hiddenFolhas.folhas.erase(it);
+                cout << "Carta removida" << endl;
+                break;
+            }
+        }
     }
     /////////////////////////////////////
 
@@ -91,7 +92,7 @@ int main() {
     /////////////////////////////////////
     // Looping principal
     while (game) {
-		print();
+        print();
         int vez;
         cout << "Quem vai jogar ( 0-Eu, 1-Outro, 2-Reset, 3-Fim )? ";
         cin >> vez;
@@ -102,7 +103,25 @@ int main() {
 
         switch (vez) {
         case 0:
-            // Calculos
+            analise_mao(&myBaralho, hiddenFolhas, turnFolhas);
+            cout << "Sua mao:\n";
+            for (auto it = myBaralho.folhas.begin(); it != myBaralho.folhas.end(); it++)
+                cout << it->naipe << it->valor << " : " << it->probabilidade << endl;
+            cout << endl;
+            
+            cout << "Jogue uma carta: \n";
+            cout << "Insira o naipe : ";
+            cin >> naipe;
+            cout << "Insira o valor : ";
+            cin >> valor;
+            for (auto it = myBaralho.folhas.begin(); it != myBaralho.folhas.end(); it++) {
+                if (it->naipe == naipe && it->valor == valor) {
+                    myBaralho.folhas.erase(it);
+                    cout << "Carta removida" << endl;
+                    break;
+                }
+            }
+            
             break;
 
         case 1:
@@ -124,7 +143,7 @@ int main() {
             break;
 
         case 2:
-			turnFolhas.folhas.clear();
+            turnFolhas.folhas.clear();
             break;
 
         case 3:

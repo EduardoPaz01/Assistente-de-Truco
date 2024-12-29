@@ -11,6 +11,7 @@ public:
 
     int valor;
     char naipe;
+	double probabilidade = 0.0;
 };
 
 class Baralho {
