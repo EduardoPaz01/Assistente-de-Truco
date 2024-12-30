@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+/* Body */
+body {
+    font-family: Arial, sans-serif; 
+    background-color: rgb(27, 24, 24);
+    color: rgba(0, 0, 0, 1); 
+    margin: 0; 
+    padding: 0;
+    height: 100vh; /* Define a altura do body como 100% da altura da viewport */
+    display: flex; /* Define o display do body como flexível */
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+    justify-content: center; /* Alinha os itens horizontalmente ao centro */
+}
+
+h1 { text-align: center; }
+
+/* Interface */
+div#interface {
+    width: 98%; /* Define a largura da interface */
+    height: 93%; /* Define a altura da interface como 100% da altura da viewport */
+    margin: 0 auto; /* Centraliza a interface horizontalmente */
+    background-color: #ffffff; /* Define a cor de fundo da interface */
+    box-shadow: 0px 0px 10px rgba(0,0,0,.5); /* Adiciona uma sombra à interface */
+    padding: 10px; /* Define o preenchimento interno da interface */
+    border-radius: 10px; /* Define o raio da borda da interface */
+}
+
+/* Menu Inicial */
+#menu_jogadores {
+    width: 100%; /* Define a largura do menu */
+    height: 100%; /* Define a altura do menu */
+    margin: auto; /* Centraliza o menu */
+    display: block; /* Define o display do menu como bloco */
+    align-items: center; /* Alinha os itens do menu ao centro */
+}
+#menu_jogadores img {
+    height: 200px; /* Define uma altura fixa para as imagens */
+    width: auto; /* Define a largura automaticamente */
+    object-fit: contain; /* Ajusta a imagem para caber dentro do contêiner */
+    display: block; /* Garante que a imagem seja exibida como bloco */
+    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+}
+#menu_jogadores hr {
+    display: none; /* Remove a linha horizontal */
+}
+
+/* Manilhas */
+#naipes {
+    width: 100%; /* Define a largura do menu */
+    height: 100%; /* Define a altura do menu */
+    margin: auto; /* Centraliza o menu */
+    display: none; /* Define o display do menu como bloco */
+    align-items: center; /* Alinha os itens do menu ao centro */
+}
+#naipes img {
+    height: 200px; /* Define uma altura fixa para as imagens */
+    width: auto; /* Define a largura automaticamente */
+    object-fit: contain; /* Ajusta a imagem para caber dentro do contêiner */
+    display: block; /* Garante que a imagem seja exibida como bloco */
+    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+}
+#naipes hr {
+    display: none; /* Remove a linha horizontal */
+}
+
+/* Valores */
+#valores {
+    width: 100%; /* Define a largura do menu */
+    height: 100%; /* Define a altura do menu */
+    margin: auto; /* Centraliza o menu */
+    display: none; /* Define o display do menu como bloco */
+    align-items: center; /* Alinha os itens do menu ao centro */
+}
+#valores img {
+    height: 200px; /* Define uma altura fixa para as imagens */
+    width: auto; /* Define a largura automaticamente */
+    object-fit: contain; /* Ajusta a imagem para caber dentro do contêiner */
+    display: block; /* Garante que a imagem seja exibida como bloco */
+    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+}
+#valores hr {
+    display: none; /* Remove a linha horizontal */
+}
+
+/* Conf. imagens */
+.image-container {
+    display: flex; /* Define o display do contêiner de imagem como flexível */
+    flex-direction: row; /* Define a direção dos itens como linha */
+    align-items: center; /* Alinha os itens ao centro */
+    justify-content: space-between; /* Distribui o espaço entre os itens */
+}
+.image-box {
+    flex: 1; /* Faz com que cada contêiner de imagem ocupe o mesmo espaço */
+    border: 1px solid black; /* Adiciona uma borda preta ao redor do contêiner */
+    padding: 10px; /* Adiciona preenchimento interno ao contêiner */
+    box-sizing: border-box; /* Inclui a borda e o preenchimento no tamanho total do contêiner */
+    text-align: center; /* Centraliza o texto dentro do contêiner */
+    margin: 0 10px; /* Adiciona margem entre os contêineres */
+    text-decoration: none; /* Remove a decoração do link */
+    color: inherit; /* Herda a cor do texto */
+    background: none; /* Remove o fundo padrão do botão */
+    cursor: pointer; /* Define o cursor como ponteiro ao passar sobre o botão */
+}
