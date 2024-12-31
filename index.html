@@ -3,13 +3,29 @@
 
 <head>
     <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assistente de Truco</title>
     <link rel="stylesheet" type="text/css" href="_css/estilo.css"/>
-    <script language="javascript" src="_javascript/estatistica.js"></script>
+    <script language="javascript" src="_javascript/main.js"></script>
 </head>
 <body>
-    <div id="interface">
-        <div id="menu_jogadores">
+    <div id="interface">            
+        <div id="principal">
+            <header>
+                <div class="header-content" id="cabecalho">
+                    <div class="images">
+                        <img src="_imagens/folhas/C1.png" alt="Imagem 1" class="small-image" id="fc1"/>
+                        <img src="_imagens/folhas/C1.png" alt="Imagem 2" class="small-image" id="fc2"/>
+                        <img src="_imagens/folhas/C1.png" alt="Imagem 3" class="small-image" id="fc3"/>
+                    </div>
+                    <div class="text">
+                        <h2>Contador rodada</h2>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+        <div id="menu_jogadores" class="menu">
             <h1>Quantas pessoas estão jogando?</h1><br>
             <div class="image-container">
                 <button onclick="qJogadores(4);" class="image-box">
@@ -23,7 +39,7 @@
                 </button>
             </div>
         </div>
-        <div id="naipes">
+        <div id="naipes" class="menu">
             <h1>Qual o tipo da carta?</h1><br>
             <div class="image-container">
                 <button onclick="func_naipes('C');" class="image-box">
@@ -48,7 +64,7 @@
                 <hr>
             </div>
         </div>
-        <div id="valores">
+        <div id="valores" class="menu">
             <h1>Qual a folha?</h1><br>
             <div class="image-container">
                 <button onclick="funf_folha(1);" class="image-box">
@@ -95,6 +111,7 @@
                 <hr>
             </div>
         </div>
+
     </div>
 </body>
 </html>

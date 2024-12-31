@@ -8,8 +8,8 @@ body {
     margin: 0; 
     padding: 0;
     height: 100vh; /* Define a altura do body como 100% da altura da viewport */
-    display: flex; /* Define o display do body como flexível */
-    align-items: center; /* Alinha os itens verticalmente ao centro */
+    display: block;
+    align-items: center;
     justify-content: center; /* Alinha os itens horizontalmente ao centro */
 }
 
@@ -17,88 +17,131 @@ h1 { text-align: center; }
 
 /* Interface */
 div#interface {
-    width: 98%; /* Define a largura da interface */
+    width: 95%; /* Define a largura da interface */
     height: 93%; /* Define a altura da interface como 100% da altura da viewport */
     margin: 0 auto; /* Centraliza a interface horizontalmente */
-    background-color: #ffffff; /* Define a cor de fundo da interface */
-    box-shadow: 0px 0px 10px rgba(0,0,0,.5); /* Adiciona uma sombra à interface */
-    padding: 10px; /* Define o preenchimento interno da interface */
+    background-color: #ffffff;
+    box-shadow: 0px 0px 10px rgba(0,0,0,.5);
+    padding: 10px;
     border-radius: 10px; /* Define o raio da borda da interface */
 }
 
-/* Menu Inicial */
-#menu_jogadores {
-    width: 100%; /* Define a largura do menu */
-    height: 100%; /* Define a altura do menu */
+/* Menu */
+.menu {
+    width: 100%; 
+    height: 100%;
     margin: auto; /* Centraliza o menu */
-    display: block; /* Define o display do menu como bloco */
-    align-items: center; /* Alinha os itens do menu ao centro */
+    align-items: center;
 }
-#menu_jogadores img {
-    height: 200px; /* Define uma altura fixa para as imagens */
-    width: auto; /* Define a largura automaticamente */
+.menu img{
+    height: 30vh; 
+    max-height: 200px;
+    width: auto;
     object-fit: contain; /* Ajusta a imagem para caber dentro do contêiner */
-    display: block; /* Garante que a imagem seja exibida como bloco */
-    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+    display: block;
+    margin: 0 auto; 
 }
-#menu_jogadores hr {
-    display: none; /* Remove a linha horizontal */
+.menu hr{
+    display: none;
 }
 
+/* contador de jogadores */
+#menu_jogadores { display: block; }
 /* Manilhas */
-#naipes {
-    width: 100%; /* Define a largura do menu */
-    height: 100%; /* Define a altura do menu */
-    margin: auto; /* Centraliza o menu */
-    display: none; /* Define o display do menu como bloco */
-    align-items: center; /* Alinha os itens do menu ao centro */
-}
-#naipes img {
-    height: 200px; /* Define uma altura fixa para as imagens */
-    width: auto; /* Define a largura automaticamente */
-    object-fit: contain; /* Ajusta a imagem para caber dentro do contêiner */
-    display: block; /* Garante que a imagem seja exibida como bloco */
-    margin: 0 auto; /* Centraliza a imagem horizontalmente */
-}
-#naipes hr {
-    display: none; /* Remove a linha horizontal */
-}
-
+#naipes { display: none; }
 /* Valores */
-#valores {
-    width: 100%; /* Define a largura do menu */
-    height: 100%; /* Define a altura do menu */
-    margin: auto; /* Centraliza o menu */
-    display: none; /* Define o display do menu como bloco */
-    align-items: center; /* Alinha os itens do menu ao centro */
+#valores { display: none; }
+
+#principal header {
+    display: flex; /* Define o display do cabeçalho como flexível */
+    justify-content: space-between; /* Distribui o espaço entre os itens */
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+    background-color: #f0f0f0; /* Define a cor de fundo do cabeçalho */
+    padding: 10px; /* Define o preenchimento interno do cabeçalho */
+    border-bottom: 1px solid #ccc; /* Adiciona uma borda inferior ao cabeçalho */
+    z-index: 1000; /* Garante que o cabeçalho fique acima de outros elementos */
 }
-#valores img {
-    height: 200px; /* Define uma altura fixa para as imagens */
-    width: auto; /* Define a largura automaticamente */
-    object-fit: contain; /* Ajusta a imagem para caber dentro do contêiner */
-    display: block; /* Garante que a imagem seja exibida como bloco */
-    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+#interface {
+    padding-top: 60px; /* Adiciona um preenchimento superior para compensar a altura do cabeçalho */
 }
-#valores hr {
-    display: none; /* Remove a linha horizontal */
+.header-content {
+    display: flex; /* Define o display do conteúdo do cabeçalho como flexível */
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+}
+.images {
+    display: flex; /* Define o display das imagens como flexível */
+    gap: 10px; /* Define o espaçamento entre as imagens */
+}
+.small-image {
+    width: 50px; /* Define a largura das imagens pequenas */
+    height: auto; /* Define a altura das imagens automaticamente */
+}
+.text h2 {
+    margin: 0; /* Remove a margem do texto */
+    padding-left: 20px; /* Adiciona preenchimento à esquerda do texto */
 }
 
 /* Conf. imagens */
 .image-container {
     display: flex; /* Define o display do contêiner de imagem como flexível */
     flex-direction: row; /* Define a direção dos itens como linha */
-    align-items: center; /* Alinha os itens ao centro */
+    align-items: center; 
     justify-content: space-between; /* Distribui o espaço entre os itens */
+    width: 100%;
 }
 .image-box {
     flex: 1; /* Faz com que cada contêiner de imagem ocupe o mesmo espaço */
-    border: 1px solid black; /* Adiciona uma borda preta ao redor do contêiner */
-    padding: 10px; /* Adiciona preenchimento interno ao contêiner */
+    border: 1px solid black; 
+    padding: 10px; 
     box-sizing: border-box; /* Inclui a borda e o preenchimento no tamanho total do contêiner */
-    text-align: center; /* Centraliza o texto dentro do contêiner */
+    text-align: center; 
     margin: 0 10px; /* Adiciona margem entre os contêineres */
     text-decoration: none; /* Remove a decoração do link */
     color: inherit; /* Herda a cor do texto */
-    background: none; /* Remove o fundo padrão do botão */
+    background: none; 
     cursor: pointer; /* Define o cursor como ponteiro ao passar sobre o botão */
+    position: relative; /* Define a posição como relativa para usar ::before */
+    overflow: hidden; /* Esconde o conteúdo que ultrapassa os limites do contêiner */
+    transition: all 0.3s ease; /* Adiciona uma transição suave para o efeito de hover */
+}
+.image-box::before {
+    content: ''; /* Adiciona um conteúdo vazio */
+    position: absolute; /* Define a posição como absoluta */
+    top: 0; /* Alinha ao topo */
+    left: 0; /* Alinha à esquerda */
+    width: 100%; /* Define a largura como 100% */
+    height: 100%; /* Define a altura como 100% */
+    background-color: rgba(0, 255, 0, 0.1); /* Adiciona um leve fundo verde */
+    z-index: 1; /* Define a camada acima da imagem */
+    opacity: 0; /* Define a opacidade como 0 inicialmente */
+    transition: all 0.3s ease; /* Adiciona uma transição suave para o efeito de hover */
+}
+
+.image-box:hover::before {
+    opacity: 1; /* Define a opacidade como 1 ao passar o mouse */
+}
+
+.image-box:hover {
+    box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.5); /* Adiciona uma sombra verde brilhante */
+}
+
+/* Configurações em telas menores */
+@media (max-width: 768px) {
+    .image-box {
+        margin: 0;
+        padding: 5px;
+    }
+
+    #menu_jogadores img {
+        height: 20vh; 
+        max-height: 150px;
+    }
+    #naipes img {
+        height: 20vh; 
+        max-height: 100px;
+    }
+    #valores img {
+        height: 20vh; 
+        max-height: 150px;
+    }
 }
