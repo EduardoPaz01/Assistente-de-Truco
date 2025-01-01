@@ -10,107 +10,66 @@
 </head>
 <body>
     <div id="interface">            
-        <div id="principal">
-            <header>
-                <div class="header-content" id="cabecalho">
-                    <div class="images">
-                        <img src="_imagens/folhas/C1.png" alt="Imagem 1" class="small-image" id="fc1"/>
-                        <img src="_imagens/folhas/C1.png" alt="Imagem 2" class="small-image" id="fc2"/>
-                        <img src="_imagens/folhas/C1.png" alt="Imagem 3" class="small-image" id="fc3"/>
-                    </div>
-                    <div class="text">
-                        <h2>Contador rodada</h2>
-                    </div>
-                </div>
-            </header>
-        </div>
+        <header id="cabecalho">
+            <nav id="status_cards">
+                <h1>Menu Superior</h1>
+                <ul>
+                    <img src="_imagens/folhas/vazia.png" alt="Imagem 1" class="small-image" id="fc1"/>
+                    <img src="_imagens/folhas/vazia.png" alt="Imagem 2" class="small-image" id="fc2"/>
+                    <img src="_imagens/folhas/vazia.png" alt="Imagem 3" class="small-image" id="fc3"/>
+                </ul>
+            </nav>
+        </header>
 
         <div id="menu_jogadores" class="menu">
             <h1>Quantas pessoas estão jogando?</h1><br>
             <div class="image-container">
-                <button onclick="qJogadores(4);" class="image-box">
+                <button onclick="func_qJogadores(4);" class="image-box">
                     <h2>4 Jogadores</h2>
                     <img src="_imagens/quatro_jogadores.png" alt="Imagem 1"/>
                 </button>
                 <hr>
-                <button onclick="qJogadores(6);" class="image-box">
+                <button onclick="func_qJogadores(6);" class="image-box">
                     <h2>6 Jogadores</h2>
                     <img src="_imagens/seis_jogadores.png" alt="Imagem 2"/>
                 </button>
             </div>
         </div>
+
+        <div id="menu_pos_jogador" class="menu">
+            <h1>Qual a sua posição?</h1><br>
+            <div class="linha_personagem" id="rotacao1">
+                <!--  Botões serão adicionados dinamicamente aqui -->
+            </div>
+            <img src="_imagens/mesa.png" alt="Mesa" class="full_width_img" id="mesa">
+            <div class="linha_personagem" id="rotacao2">
+                <!--  Botões serão adicionados dinamicamente aqui -->
+            </div>
+        </div>
+
         <div id="naipes" class="menu">
-            <h1>Qual o tipo da carta?</h1><br>
+            <h1 class="chamada_folha"></h1><br>
             <div class="image-container">
-                <button onclick="func_naipes('C');" class="image-box">
-                    <h2>Copas</h2>
-                    <img src="_imagens/naipe_copas.png" alt="Copa"/>
-                </button>
-                <hr>
-                <button onclick="func_naipes('E');" class="image-box">
-                    <h2>Espadas</h2>
-                    <img src="_imagens/naipe_espadas.png" alt="Espada"/>
-                </button>
-                <hr>
-                <button onclick="func_naipes('O');" class="image-box">
-                    <h2>Ouros</h2>
-                    <img src="_imagens/naipe_ouros.png" alt="Ouro"/>
-                </button>
-                <hr>
-                <button onclick="func_naipes('P');" class="image-box">
-                    <h2>Paus</h2>
-                    <img src="_imagens/naipe_paus.png" alt="Pau"/>
-                </button>
-                <hr>
+                <!-- Botões serão adicionados dinamicamente aqui -->
             </div>
         </div>
         <div id="valores" class="menu">
-            <h1>Qual a folha?</h1><br>
-            <div class="image-container">
-                <button onclick="funf_folha(1);" class="image-box">
-                    <img src="_imagens/folhas/C1.png" alt="Folha 1" id="folha1"/>
-                </button>
-                <hr>
-                <button onclick="funf_folha(2);" class="image-box">
-                    <img src="_imagens/folhas/C1.png" alt="Folha 2" id="folha2"/>
-                </button>
-                <hr>
-                <button onclick="funf_folha(3);" class="image-box">
-                    <img src="_imagens/folhas/C1.png" alt="Folha 3" id="folha3"/>
-                </button>
-                <hr>
-                <button onclick="funf_folha(4);" class="image-box">
-                    <img src="_imagens/folhas/C1.png" alt="Folha 4" id="folha4"/>
-                </button>
-                <hr>
-                <button onclick="funf_folha(5);" class="image-box">
-                    <img src="_imagens/folhas/C1.png" alt="Folha 5" id="folha5"/>
-                </button>
-                <hr>
+            <h1 class="chamada_folha"></h1><br>
+            <div class="image-container" id="fila1">
+                <!--  Botões serão adicionados dinamicamente aqui -->
             </div><br>
-            <div class="image-container">
-                <button onclick="funf_folha(6);" class="image-box">
-                    <img src="_imagens/folhas/C1.png" alt="Folha 6" id="folha6"/>
-                </button>
-                <hr>
-                <button onclick="funf_folha(7);" class="image-box">
-                    <img src="_imagens/folhas/C1.png" alt="Folha 7" id="folha7"/>
-                </button>
-                <hr>
-                <button onclick="funf_folha(10);" class="image-box">
-                    <img src="_imagens/folhas/C1.png" alt="Folha 10" id="folha10"/>
-                </button>
-                <hr>
-                <button onclick="funf_folha(11);" class="image-box">
-                    <img src="_imagens/folhas/C1.png" alt="Folha 11" id="folha11"/>
-                </button>
-                <hr>
-                <button onclick="funf_folha(12);" class="image-box">
-                    <img src="_imagens/folhas/C1.png" alt="Folha 12" id="folha12"/>
-                </button>
-                <hr>
+            <div class="image-container" id="fila2">
+                <!--  Botões serão adicionados dinamicamente aqui -->
             </div>
         </div>
+
+        <footer id="rodape">
+            <nav id="menu_inferior">
+                <ul>
+                    <!--  Imagens serão adicionados dinamicamente aqui -->
+                </ul>
+            </nav>
+        </footer>
 
     </div>
 </body>

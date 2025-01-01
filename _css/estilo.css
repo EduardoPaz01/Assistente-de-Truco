@@ -3,7 +3,7 @@
 /* Body */
 body {
     font-family: Arial, sans-serif; 
-    background-color: rgb(27, 24, 24);
+    background-color: gray;
     color: rgba(0, 0, 0, 1); 
     margin: 0; 
     padding: 0;
@@ -12,7 +12,6 @@ body {
     align-items: center;
     justify-content: center; /* Alinha os itens horizontalmente ao centro */
 }
-
 h1 { text-align: center; }
 
 /* Interface */
@@ -26,15 +25,21 @@ div#interface {
     border-radius: 10px; /* Define o raio da borda da interface */
 }
 
+
+
 /* Menu */
 .menu {
-    width: 100%; 
-    height: 100%;
-    margin: auto; /* Centraliza o menu */
+    width: 95%; 
+    border: 0;
+    height: auto;
+    margin: 0; /* Centraliza o menu */
+    padding: 0;
     align-items: center;
+    top: 15vh;
+    position: absolute;
 }
 .menu img{
-    height: 30vh; 
+    height: 15vh; 
     max-height: 200px;
     width: auto;
     object-fit: contain; /* Ajusta a imagem para caber dentro do contêiner */
@@ -45,43 +50,101 @@ div#interface {
     display: none;
 }
 
-/* contador de jogadores */
+/* Menus interativos */
 #menu_jogadores { display: block; }
-/* Manilhas */
+#menu_pos_jogador { display: none; }
 #naipes { display: none; }
-/* Valores */
 #valores { display: none; }
 
-#principal header {
-    display: flex; /* Define o display do cabeçalho como flexível */
-    justify-content: space-between; /* Distribui o espaço entre os itens */
+
+
+/* Menus Rot */
+.linha_personagem {
+    display: flex; /* Define o display como flexível */
+    justify-content: center; /* Centraliza os itens horizontalmente */
+    gap: 25px; /* Define o espaçamento entre os botões */
+    margin-bottom: 10px;
+    margin-top: 0;
+}
+#mesa {
+    width: 90%; /* Define a largura da mesa como 80% */
+    margin: 0 auto; /* Centraliza a mesa horizontalmente */
+    display: block; /* Garante que a mesa seja exibida como bloco */
+    margin-bottom: 10px;
+}
+.user_rotacao {
+    width: 6%; /* Define a largura das imagens pequenas */
+    height: auto;
+    border: 0;
+    position: relative; /* Adiciona posição relativa para o pseudo-elemento */
+    background-color: rgba(0, 0, 0, 0.0);
+}
+.user_rotacao img{
+    width: 100%;
+    height: auto;
+}
+.user_rotacao::before {
+    content: ''; /* Adiciona conteúdo vazio */
+    position: absolute; /* Define a posição como absoluta */
+    top: 0; /* Alinha ao topo do botão */
+    left: 0; /* Alinha à esquerda do botão */
+    width: 100%; /* Define a largura como 100% do botão */
+    height: 100%; /* Define a altura como 100% do botão */
+    background-color: rgba(0, 255, 0, 0.2); /* Adiciona um leve fundo verde */
+    z-index: 1; /* Define a camada acima da imagem */
+    box-sizing: border-box; /* Inclui a borda no tamanho total */
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+.user_rotacao:hover::before {
+    opacity: 1; /* Define a opacidade como 1 ao passar o mouse */
+}
+.user_rotacao:hover {
+    box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.5); /* Adiciona uma sombra verde brilhante */
+}
+
+
+
+/* Conf. menus Externos */
+nav{ 
+    background-color: gray;
+    display: block;
+    list-style: none;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+nav ul{
+    display: block; 
+    margin: 5px;
+    padding: 5px;
+}
+nav h1{
+    display: none; 
+}
+
+/* Conf. Cabecalho */
+nav#status_cards{ top:0; }
+
+/* Conf. Rodapé */
+nav#menu_inferior {
+    top: 84vh;
+    display: none; /* Define o display do menu inferior como flexível */
     align-items: center; /* Alinha os itens verticalmente ao centro */
-    background-color: #f0f0f0; /* Define a cor de fundo do cabeçalho */
-    padding: 10px; /* Define o preenchimento interno do cabeçalho */
-    border-bottom: 1px solid #ccc; /* Adiciona uma borda inferior ao cabeçalho */
-    z-index: 1000; /* Garante que o cabeçalho fique acima de outros elementos */
+    justify-content: center; /* Alinha os itens horizontalmente ao centro */
 }
-#interface {
-    padding-top: 60px; /* Adiciona um preenchimento superior para compensar a altura do cabeçalho */
-}
-.header-content {
-    display: flex; /* Define o display do conteúdo do cabeçalho como flexível */
-    align-items: center; /* Alinha os itens verticalmente ao centro */
-}
-.images {
-    display: flex; /* Define o display das imagens como flexível */
-    gap: 10px; /* Define o espaçamento entre as imagens */
-}
+
+
+
+/* Conf. imagens */
 .small-image {
     width: 50px; /* Define a largura das imagens pequenas */
     height: auto; /* Define a altura das imagens automaticamente */
 }
-.text h2 {
-    margin: 0; /* Remove a margem do texto */
-    padding-left: 20px; /* Adiciona preenchimento à esquerda do texto */
-}
-
-/* Conf. imagens */
 .image-container {
     display: flex; /* Define o display do contêiner de imagem como flexível */
     flex-direction: row; /* Define a direção dos itens como linha */
@@ -111,25 +174,32 @@ div#interface {
     left: 0; /* Alinha à esquerda */
     width: 100%; /* Define a largura como 100% */
     height: 100%; /* Define a altura como 100% */
-    background-color: rgba(0, 255, 0, 0.1); /* Adiciona um leve fundo verde */
+    background-color: rgba(0, 255, 0, 0.2); /* Adiciona um leve fundo verde */
     z-index: 1; /* Define a camada acima da imagem */
     opacity: 0; /* Define a opacidade como 0 inicialmente */
     transition: all 0.3s ease; /* Adiciona uma transição suave para o efeito de hover */
 }
-
 .image-box:hover::before {
     opacity: 1; /* Define a opacidade como 1 ao passar o mouse */
 }
-
 .image-box:hover {
     box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.5); /* Adiciona uma sombra verde brilhante */
 }
 
+
+
 /* Configurações em telas menores */
 @media (max-width: 768px) {
+    h1{font-size: 20pt;}
+
     .image-box {
         margin: 0;
         padding: 5px;
+    }
+
+    .user_rotacao {
+        width: 12%; /* Define a largura das imagens pequenas */
+        height: auto;
     }
 
     #menu_jogadores img {
