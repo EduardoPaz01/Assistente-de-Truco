@@ -53,6 +53,7 @@ div#interface {
 /* Menus interativos */
 #menu_jogadores { display: block; }
 #menu_pos_jogador { display: none; }
+#menu_jogador { display: none; }
 #naipes { display: none; }
 #valores { display: none; }
 
@@ -123,12 +124,48 @@ nav ul{
     margin: 5px;
     padding: 5px;
 }
-nav h1{
-    display: none; 
-}
+nav h1{ display: none; }
 
 /* Conf. Cabecalho */
-nav#status_cards{ top:0; }
+nav#status_cards{ 
+    top: 0; 
+    display: flex; /* Define o display como flexível */
+    justify-content: space-between; /* Distribui o espaço entre os itens */
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+}
+
+/* Estilo para a miniatura do menu_pos_jogador */
+#mini_menu_posicao {
+    position: absolute; /* Define a posição como absoluta */
+    top: 0; /* Alinha ao topo do nav */
+    right: 0; /* Alinha à direita do nav */
+    height: 75px; /* Define a altura automaticamente */
+    width: auto; /* Define a largura da miniatura */
+    margin: 10px; /* Adiciona margem */
+    z-index: 10; /* Define a camada acima dos outros elementos */
+    display: flex; /* Define o display como flexível */
+    flex-direction: column; /* Define a direção dos itens como coluna */
+    align-items: center; /* Alinha os itens ao centro */
+    justify-content: center; /* Centraliza os itens */
+}
+#linhasuperior, #linhainferior {
+    margin: 5px;
+    width: 100%; /* Define a largura como 100% do contêiner */
+    height: auto; /* Define a altura como 30% do contêiner */
+    display: flex; /* Define o display como flexível */
+    justify-content: space-around; /* Distribui o espaço entre os itens */
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+}
+#imgMesa {
+    height: 30px;
+    width: auto; /* Define a largura como 100% do contêiner */
+    object-fit: contain; /* Ajusta a imagem para caber dentro do contêiner */
+}
+#linhasuperior img, #linhainferior img {
+    /* box-shadow: 0 0 3px 1px rgba(0, 255, 0, 0.5); */
+    height: 15px; /* Define a altura das imagens como 100% do contêiner */
+    width: auto; /* Define a largura automaticamente */
+}
 
 /* Conf. Rodapé */
 nav#menu_inferior {
@@ -137,6 +174,10 @@ nav#menu_inferior {
     align-items: center; /* Alinha os itens verticalmente ao centro */
     justify-content: center; /* Alinha os itens horizontalmente ao centro */
 }
+
+
+
+/* Conf. Mão */
 
 
 
@@ -154,7 +195,7 @@ nav#menu_inferior {
 }
 .image-box {
     flex: 1; /* Faz com que cada contêiner de imagem ocupe o mesmo espaço */
-    border: 1px solid black; 
+    border: 1px ; 
     padding: 10px; 
     box-sizing: border-box; /* Inclui a borda e o preenchimento no tamanho total do contêiner */
     text-align: center; 
