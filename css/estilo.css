@@ -178,6 +178,15 @@ nav#menu_inferior {
 
 
 /* Conf. Mão */
+.myFolhas{
+    margin: 5px;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid gray;
+}
+.myFolhas h2.vitoria{ color: green; }
+.myFolhas h2.empate{ color: yellow; }
+.myFolhas h2.derrota{ color: red; }
 
 
 
