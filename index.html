@@ -7,83 +7,55 @@
     <title>Assistente de Truco</title>
     <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
     <script language="javascript" src="javascript/main.js"></script>
+    <link rel="shortcut icon" href="imagens/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <div id="interface">            
-        <header id="cabecalho">
-            <nav id="status_cards">
-                <h1>Menu Superior</h1>
-                <ul>
-                    <img src="imagens/folhas/vazia.png" alt="Imagem 1" class="small-image" id="fc1"/>
-                    <img src="imagens/folhas/vazia.png" alt="Imagem 2" class="small-image" id="fc2"/>
-                    <img src="imagens/folhas/vazia.png" alt="Imagem 3" class="small-image" id="fc3"/>
-                </ul>
-            </nav>
-        </header>
+    <header id="cabecalho">
+        <nav id="menu_superior">
+            
+        </nav>
+    </header>
 
-        <div id="menu_jogadores" class="menu">
-            <h1>Quantas pessoas estão jogando?</h1><br>
-            <div class="image-container">
-                <button onclick="func_qJogadores(4);" class="image-box">
+    <main>
+        <!-- MENU INICIAL - SELETOR DE QUANTAS PESSOAS ESTÃO JOGANDO -->
+        <section id="menu_quantidade_jogadores" class="menu">
+            <h2>Quantas pessoas estão jogando?</h2>
+            <div class="divisao_botoes" id="div_quantidade_jogadores">
+                <button onclick="botao_qjogadores(4);" class="botao">
                     <h2>4 Jogadores</h2>
-                    <img src="imagens/quatrojogadores.png" alt="Imagem 1"/>
+                    <img src="imagens/quatrojogadores.png"/>
                 </button>
-                <hr>
-                <button onclick="func_qJogadores(6);" class="image-box">
+                <button onclick="botao_qjogadores(6);" class="botao">
                     <h2>6 Jogadores</h2>
-                    <img src="imagens/seisjogadores.png" alt="Imagem 2"/>
+                    <img src="imagens/seisjogadores.png"/>
                 </button>
             </div>
-        </div>
+        </section>
 
-        <div id="menu_pos_jogador" class="menu">
-            <h1>Qual a sua posição?</h1><br>
-            <div class="linha_personagem" id="rotacao1">
-                <!--  Botões serão adicionados dinamicamente aqui -->
-            </div>
-            <img src="imagens/mesa.png" alt="Mesa" class="full_width_img" id="mesa">
-            <div class="linha_personagem" id="rotacao2">
-                <!--  Botões serão adicionados dinamicamente aqui -->
-            </div>
-        </div>
+        <!-- SELETOR DE QUAL POSIÇÃO ESTÁ JOGANDO -->
+        <section id="menu_rotacao_jogador" class="menu">
+            <h2>Qual a sua posição?</h2>
+            <!--  Containers serão adicionados dinamicamente aqui -->
+        </section>
 
-        <div id="naipes" class="menu">
-            <h1 class="chamada_folha"></h1><br>
-            <div class="image-container">
-                <!-- Botões serão adicionados dinamicamente aqui -->
-            </div>
-        </div>
-        <div id="valores" class="menu">
-            <h1 class="chamada_folha"></h1><br>
-            <div class="image-container" id="fila1">
-                <!--  Botões serão adicionados dinamicamente aqui -->
-            </div><br>
-            <div class="image-container" id="fila2">
-                <!--  Botões serão adicionados dinamicamente aqui -->
-            </div>
-        </div>
+        <!-- SELETOR DE NAIPE -->
+        <section id="menu_selecao_naipe" class="menu">
+            <!--  Containers serão adicionados dinamicamente aqui -->
+        </section> 
 
-        <div id="menu_jogador" class="menu">
-            <h1>Jogue uma carta</h1>
-            <div class="image-container">
-                <!--  Botões serão adicionados dinamicamente aqui -->
-            </div>
-        </div>
+        <!-- SELETOR DE VALOR -->
+        <section id="menu_selecao_valor" class="menu">
+            <!--  Containers serão adicionados dinamicamente aqui -->
+        </section> 
 
-        <footer id="rodape">
-            <nav id="menu_inferior">
-                <ul>
-                    <!--  Imagens serão adicionados dinamicamente aqui -->
-                </ul>
-            </nav>
-        </footer>
+    </main>
 
-    </div>
+    <footer id="rodape">
+        <nav id="menu_inferior">
+            <ul>
+                <!--  Imagens serão adicionados dinamicamente aqui -->
+            </ul>
+        </nav>
+    </footer>
 </body>
 </html>
-
-<!-- 
-    CORREÇÃO NA REMOÇÃO DA VISUALIZAÇÃO DE CARTAS NÃO JOGADAS;
-    IMPLEMENTAÇÃO DO VETOR HIDDEN FOLHAS;
-    REVISÃO DO MAIN.JS;
- -->
