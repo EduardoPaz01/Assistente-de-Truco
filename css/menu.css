@@ -1,49 +1,21 @@
 @charset "UTF-8";
 
-/* GERAIS */
-body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: gray;
-}
-main {
-    width: 98%;
-    height: 70%; /* Define a altura fixa para a main */
-    background-color: white;
-    display: flex;
-}
-header, footer {
-    width: 100%;
-    height: 15%;
-    background-color: gray;
-    color: white;
-}
-
-/* EM ANALISE */
-nav ul li {
-    display: inline;
-}
-
-
 /* MENU */
 section.menu { 
     flex-grow: 1; /* Faz com que as sections com a classe menu preencham 100% da main */
 }
 .menu {
+    display: none;
     position: relative;
-    /*border: 1px solid yellow;*/
+    /*border: 1px solid yellow; */
 }
 .menu h2{
+    display: flex;  /* Usado para centralizar o texto */
     height: 20%;
     margin: 0; /* Remove as margens superior e inferior */
-    display: flex; /* Usado para centralizar o texto */
     align-items: center;
     justify-content: center; 
-    /*border: 1px solid black; */
+    /*border: 1px solid green; */
 }
 .divisao_botoes {
     display: flex; 
@@ -54,7 +26,7 @@ section.menu {
     width: 100%;
     height: 80%; /* Compensa o h2 */
     gap: 5px; /* Separa os botões internos */
-    /*border: 1px solid red;*/
+    /*border: 1px solid red; */
 }
 .botao {
     flex: 1; /* Faz com que cada contêiner de imagem ocupe o mesmo espaço */ 
@@ -65,7 +37,7 @@ section.menu {
     position: relative; /* Para usar ::before */
     overflow: hidden; /* Esconde o conteúdo que ultrapassa os limites do contêiner */
     transition: all 0.3s ease; /* Adiciona uma transição suave para o efeito de hover */
-    /*border: 1px solid blue;*/
+    border: 0; /*border: 1px solid blue; */
 }
 .botao::before {
     content: ''; /* Adiciona um conteúdo vazio */
@@ -79,47 +51,14 @@ section.menu {
     opacity: 0; 
     transition: all 0.3s ease; /* Adiciona uma transição suave para o efeito de hover */
 }
-.botao:hover::before { opacity: 1; }
-.botao:hover { box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.6); }
+.botao:hover::before { 
+    opacity: 1; 
+}
+.botao:hover { 
+    box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.6); 
+}
 .menu img{
     height: 15vh; 
     max-height: 200px;
     object-fit: contain; /* Ajusta a imagem para caber dentro do contêiner */
-    /*border: 1px solid green;*/
-}
-
-
-
-/* PRIMEIRO MENU BOTÕES */
-#div_quantidade_jogadores .botao{
-    margin: 0 10%;
-}
-
-
-
-/* ROTAÇÃO */
-#rotacao { 
-    flex-direction: column; 
-    justify-content: center; /* Remove brodas internas */
-}
-#rotacao h2{
-    height: 20%;
-    display: flex; /* Usado para centralizar o texto */
-    align-items: center;
-    justify-content: center; 
-}
-#rotacao #mesa{
-    height: 50%;
-    /*border: 1px solid orange;*/ 
-}
-#rotacao div{ height: 20%; }
-#rotacao .botao{
-    height: 100%; 
-    width: auto;
-    object-fit: scale-down;
-}
-#rotacao .botao img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
 }

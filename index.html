@@ -5,15 +5,20 @@
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Assistente de Truco</title>
-    <link rel="stylesheet" type="text/css" href="css/estilo.css"/>
+    <link rel="stylesheet" type="text/css" href="css/geral.css"/>
+    <link rel="stylesheet" type="text/css" href="css/menu.css"/>
+    <link rel="stylesheet" type="text/css" href="css/menuespecifico.css"/>
     <script language="javascript" src="javascript/main.js"></script>
     <link rel="shortcut icon" href="imagens/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <header id="cabecalho">
-        <nav id="menu_superior">
-            
-        </nav>
+        <section id="rotacao_mini">
+            <!-- rotacao_mini -->
+        </section>
+        
+        <!-- manilha      -->
+        <!-- estado_sua_mao -->
     </header>
 
     <main>
@@ -21,11 +26,11 @@
         <section id="menu_quantidade_jogadores" class="menu">
             <h2>Quantas pessoas estão jogando?</h2>
             <div class="divisao_botoes" id="div_quantidade_jogadores">
-                <button onclick="botao_qjogadores(4);" class="botao">
+                <button onclick="{ controle.setQuantidadeJogadores(4) }" class="botao">
                     <h2>4 Jogadores</h2>
                     <img src="imagens/quatrojogadores.png"/>
                 </button>
-                <button onclick="botao_qjogadores(6);" class="botao">
+                <button onclick="{ controle.setQuantidadeJogadores(6) }" class="botao">
                     <h2>6 Jogadores</h2>
                     <img src="imagens/seisjogadores.png"/>
                 </button>
@@ -51,11 +56,8 @@
     </main>
 
     <footer id="rodape">
-        <nav id="menu_inferior">
-            <ul>
-                <!--  Imagens serão adicionados dinamicamente aqui -->
-            </ul>
-        </nav>
+        <!-- controle_folhas_jogadas -->
     </footer>
+    
 </body>
 </html>

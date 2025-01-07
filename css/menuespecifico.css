@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+/* PRIMEIRO MENU BOTÕES */
+#div_quantidade_jogadores .botao{
+    margin: 0 10%;
+}
+
+
+
+/* ROTAÇÃO */
+#rotacao { 
+    flex-direction: column; 
+    justify-content: center; /* Remove brodas internas */
+}
+#rotacao h2{
+    display: flex; /* Usado para centralizar o texto */
+    height: 20%;
+    align-items: center;
+    justify-content: center; 
+}
+#rotacao #mesa{
+    height: 50%;
+    /*border: 1px solid orange;*/ 
+}
+#rotacao div{ height: 20%; }
+#rotacao .botao{
+    height: 100%; 
+    width: auto;
+    object-fit: scale-down;
+}
+#rotacao .botao img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
