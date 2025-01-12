@@ -6,11 +6,12 @@ class Main {
         this.janela = new Janela(" ")
         this.Jogadores = []
         this.Equipes = []
+        this.comecoJogo = false
     }
 
     // Inicia a primeira tela
     inicio (){
-        this.janela.updateDisplay("menu_quantidade_jogadores")
+        this.janela.gerarMenuQuantidadeJogadores()
         this.Equipes.push(new Equipe("blue"))
         this.Equipes.push(new Equipe("red"))
     }
@@ -24,11 +25,16 @@ class Main {
             this.Equipes[i%2].setJogador(this.Jogadores[i])
         }
 
+        // Configura o menu inferior de controle de cartas jogadas
+        this.janela.gerarMenuInferior(this.quantidade_jogadores)
+
+        // Configura a exibição das folhas do jogador
+        this.janela.gerarFolhasJogador()
+
         // Configura o menu rotação
+        this.janela.limparInterface()
         this.janela.gerarMenuRotacao(this.quantidade_jogadores)
 
-        // Inicia o menu rotacao
-        this.janela.updateDisplay("menu_rotacao_jogador")
     }
 
     setPosicaoJogador(posicao_jogador){
@@ -44,44 +50,81 @@ class Main {
         }
 
         // Configura o mini menu
-        // Em manutenção
-        //this.janela.gerarMenuRotacaoSuperior(posicao_jogador, this.quantidade_jogadores)
+        this.janela.gerarMenuRotacaoSuperior(posicao_jogador, this.quantidade_jogadores)
+        this.janela.updateMenuRotacaoSuperior(0)
 
         // Começa o laço de repetição
-        //this.continue()
+        this.continue()
     }
 
     continue(){
+        // Enquanto você não mostrar suas três folhas e a manilha o jogo não começa
+        if(!comecoJogo){
+            if (Jogador[0].mao.lenght < 3){
 
+            }
+        }
     }
 }
 
  // Configurações da janela
 class Janela {
     constructor(menuId){
-        this.menuId = menuId
         this.container = null
     }
 
     // Oculta todos os menus exceto o que deve estar na tela
-    updateDisplay(menuId){
-        this.menuId = menuId
-        document.querySelectorAll('.menu').forEach(menu => {
-            menu.style.display = 'none'
-        })
-        document.getElementById(menuId).style.display = 'block'
+    limparInterface(){
+        this.container.replaceChildren()
     }
-    // Retorna o string associado a janela ativa
-    getMenuId(){
-        return this.menuId
+
+    // Gera o menu das folhas do jogador
+    gerarFolhasJogador(){
+        const folhasJogador = document.getElementById("estado_sua_mao")
+        
+        for(let i=0; i<3; i++){
+            const folha = document.createElement("img")
+            folha.src = "imagens/folhas/vazia.png"
+            folha.id = `folhasJogador${i}`
+            folhasJogador.appendChild(folha)
+        }
+    }
+
+    // Produz o menu de seleção de quantidade de jogadores
+    gerarMenuQuantidadeJogadores(){
+        this.container = document.getElementById("interface_principal")
+
+        // Configura a pergunta
+        let pergunta = document.createElement("h1")
+        pergunta.innerHTML = "Quantas pessoas estão jogando?"
+
+        // Configura os botões de seleção de quantidade de jogadores
+        let espaco_botoes = document.createElement("div")
+        for(let i=0; i<2; i++){
+            let butao = document.createElement("button")
+            let imagem = document.createElement("img")
+            let descricao = document.createElement("h2")
+
+            imagem.src = "imagens/"+((i%2==0)?"quatrojogadores":"seisjogadores")+".png"
+            descricao.innerHTML = (i%2==0)?"4 Jogadores":"6 Jogadores"
+            butao.onclick = ()=>{controle.setQuantidadeJogadores((i%2==0)?4:6)}
+
+            butao.appendChild(imagem)
+            butao.appendChild(descricao)
+            espaco_botoes.append(butao)
+        }
+        this.container.appendChild(pergunta)
+        this.container.appendChild(espaco_botoes)
     }
 
     // Corrija a janela de seleção da posição do jogador
     gerarMenuRotacao(quantidade_jogadores){
-        let container = document.querySelector("#menu_rotacao_jogador")
+        // Configura a pergunta
+        let pergunta = document.createElement("h1")
+        pergunta.innerHTML = "Qual a sua posição?"
+
         let linha_sup = document.createElement("div") 
         let linha_inf = document.createElement("div") 
-
         for(let i=0; i<quantidade_jogadores; i++){
             // Cria o botão
             const button = document.createElement("button")
@@ -89,11 +132,9 @@ class Janela {
             img.src = "imagens/"+((i==0)?"dealer":"umjogador")+".png"
 
             //Finaliza o botão
-            button.onclick = function(){ 
-                controle.setPosicaoJogador( correcaoRotacao(i, quantidade_jogadores) ) 
-            }
-            button.className = "botao"
+            button.onclick = ()=>{ controle.setPosicaoJogador( correcaoRotacao(i, quantidade_jogadores) ) }
             button.appendChild(img)
+
             if(i<quantidade_jogadores/2)
                 linha_sup.appendChild(button)
             else if(i>=quantidade_jogadores/2)
@@ -105,13 +146,15 @@ class Janela {
         img.src = "imagens/mesa.png"
         
         // Posiciona os elementos
-        let conjunto = document.createElement("div") 
-        conjunto.className = "divisao_botoes"
-        conjunto.id = "rotacao"
-        conjunto.appendChild(linha_sup)
-        conjunto.appendChild(img)
-        conjunto.appendChild(linha_inf)
-        container.appendChild(conjunto)
+        let espaco_botoes = document.createElement("div") 
+        espaco_botoes.id = "rotacao"
+        espaco_botoes.appendChild(linha_sup)
+        espaco_botoes.appendChild(img)
+        espaco_botoes.appendChild(linha_inf)
+
+        //Adiciona a interface
+        this.container.append(pergunta)
+        this.container.appendChild(espaco_botoes)
     }
 
     // Formate o menu de rotacao superior pela primeira vez
@@ -127,8 +170,7 @@ class Janela {
             // Cria a imagem
             const img = document.createElement("img")
             img.src = "imagens/"+((i==0)?"dealer":"umjogador")+".png"
-            img.id = 'user_pos'+(correcaoRotacao(i))
-            img.className = "imagem_pequena"
+            img.id = 'user_pos'+(correcaoRotacao(i, quantidade_jogadores))
 
             // Posiciona a imagem na div
             if(i<quantidade_jogadores/2)
@@ -140,17 +182,45 @@ class Janela {
         const img = document.createElement("img")
         img.id = "mesa_mini"
         img.src = "imagens/mesa.png"
-        
+
         // Preenche a section do rotacao mini
         menu_rot.appendChild(linha_sup)
         menu_rot.appendChild(img)
         menu_rot.appendChild(linha_inf)
 
+        // Marca a posição do jogador
+        let imgJogador = document.getElementById(`user_pos${posicao_do_jogador}`)
+        imgJogador.style.backgroundColor = "yellow"
+
+    }
+
+    gerarMenuInferior(quantidade_jogadores){
+        const menuInferior = document.getElementById("rodape")
+        
+        for(let i=0; i<quantidade_jogadores; i++){
+            const folha = document.createElement("img")
+            folha.src = "imagens/folhas/vazia.png"
+            folha.id = `folha_pilha${i}`
+            menuInferior.appendChild(folha)
+        }
     }
 
     // Atualiza o menu de rotação por rodada
     updateMenuRotacaoSuperior(posicao_do_jogo){
-        
+        let imgJogador = document.getElementById(`user_pos${posicao_do_jogo}`)
+        imgJogador.style.border = "1px solid orangered"
+    }
+
+    // Coleta uma folha (passar ciclo sempre como 0)
+    coletarFolha(instrucao, ciclo){
+        //Mostra a seleção de naipe
+        if(ciclo === 0){
+            
+        }
+        //Mostra a seleção de valor
+        else{
+            let naipe = ciclo
+        }
     }
 }
 
@@ -217,9 +287,7 @@ class Equipe {
 var controle = new Main();
 
 // Mostrar o menu principal ao carregar a página
-window.addEventListener('load', () => {
-    controle.inicio()
-})
+window.addEventListener('load', ()=>{ controle.inicio() } )
 
 // Fator de correção para o valor ddas folhas
 function correcaoSequencia(indice){
@@ -231,7 +299,7 @@ function correcaoSequencia(indice){
 function correcaoRotacao(indice, quantidade_jogadores){
 
     if( indice === 0) 
-        return 0
+        return "0"
     else if( indice>0 && indice<quantidade_jogadores/2) 
         return (quantidade_jogadores - indice)
     else if( indice>=quantidade_jogadores/2) 

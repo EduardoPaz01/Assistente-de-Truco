@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+/* Menu Inferior */
+footer {
+    width: 96%;
+    height: 15%;
+    background-color: gray;
+    color: white;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    gap: .7%;
+}
+
+footer img{
+    margin: 0;
+    height: 80%;
+}

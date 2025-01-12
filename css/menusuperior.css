@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+/* Menu Superior */
+header {
+    width: 96%;
+    height: 15%;
+    background-color: gray;
+    color: white;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding-right: 2%;
+    padding-left: 2%;
+}
+
+/* Definições gerais para as secções */
+#cabecalho section{
+    display: flex;
+    height: 80%;
+    width: auto;
+    justify-content: center;
+    align-items: center; 
+}
+
+/* Menu de controle para sua mão */
+section#estado_sua_mao{ 
+    margin: 0;
+    padding: 0;
+    gap: 2.5%;
+}
+#estado_sua_mao img {
+    height: 100%;
+}
+
+/* Menu de cotrole manilha */
+section#manilha{
+    border: 1px solid blue;
+    margin: 0;
+    padding: 0;
+}
+#manilha img {
+    height: 100%;
+}
+
+/* Menu de controle de rotação mini */
+section#rotacao_mini {
+    flex-direction: column; 
+    margin: 0;
+    padding: 0;
+}
+#rotacao_mini #mesa_mini {
+    height: 50%;
+}
+#rotacao_mini div {
+    display: flex;
+    width: 100%;
+    height: 25%;
+    justify-content: space-around;
+    align-items: center;
+}
+#rotacao_mini div img {
+    height: 75%;
+}

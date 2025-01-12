@@ -127,16 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="estatistica.cpp" />
-    <ClCompile Include="janela.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="data.hpp" />
-    <ClInclude Include="estatistica.hpp" />
-    <ClInclude Include="janela.hpp" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="css\geral.css" />
+    <None Include="css\menu.css" />
+    <None Include="css\menuespecifico.css" />
+    <None Include="css\menurotacaosuperior.css" />
+    <None Include="css\old.estilo.css" />
+    <None Include="index.html" />
+    <None Include="javascript\main.js" />
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

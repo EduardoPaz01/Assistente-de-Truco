@@ -1,46 +1,45 @@
 @charset "UTF-8";
 
 /* MENU */
-section.menu { 
-    flex-grow: 1; /* Faz com que as sections com a classe menu preencham 100% da main */
-}
-.menu {
-    display: none;
-    position: relative;
-    /*border: 1px solid yellow; */
-}
-.menu h2{
-    display: flex;  /* Usado para centralizar o texto */
-    height: 20%;
-    margin: 0; /* Remove as margens superior e inferior */
-    align-items: center;
-    justify-content: center; 
-    /*border: 1px solid green; */
-}
-.divisao_botoes {
-    display: flex; 
-    flex-direction: row; /* Define a direção dos itens como linha */
-    align-items: center; 
-    vertical-align: center;
-    justify-content: space-between; /* Distribui o espaço entre os itens */
+main {
+    display: flex;
     width: 100%;
+    height: 70%; /* Define a altura fixa para a main */
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+}
+
+main h1 {
+    display: flex;
+    margin: 0;
+    height: 20%;
+    width: 100%;
+    text-align: center;
+    justify-content: center; 
+    align-items: center;
+}
+main div {
+    display: flex;
     height: 80%; /* Compensa o h2 */
-    gap: 5px; /* Separa os botões internos */
-    /*border: 1px solid red; */
+    width: auto;
+    gap: 50px;
+    align-items: center;
+    
 }
-.botao {
-    flex: 1; /* Faz com que cada contêiner de imagem ocupe o mesmo espaço */ 
-    margin: 0 10px; /* Adiciona margem entre os contêineres */
-    text-decoration: none; 
-    background: none; 
-    cursor: pointer; /* Define o cursor como ponteiro ao passar sobre o botão */
+main div button{
+    height: 100px;
+    width: 100px;
+    text-decoration: none;
+    background: none;
+    cursor: pointer;
+    border: 0;
     position: relative; /* Para usar ::before */
-    overflow: hidden; /* Esconde o conteúdo que ultrapassa os limites do contêiner */
     transition: all 0.3s ease; /* Adiciona uma transição suave para o efeito de hover */
-    border: 0; /*border: 1px solid blue; */
 }
-.botao::before {
-    content: ''; /* Adiciona um conteúdo vazio */
+main div button::before {
+    content: '';
     position: absolute; 
     top: 0;
     left: 0;
@@ -51,14 +50,18 @@ section.menu {
     opacity: 0; 
     transition: all 0.3s ease; /* Adiciona uma transição suave para o efeito de hover */
 }
-.botao:hover::before { 
+main div button:hover::before { 
     opacity: 1; 
 }
-.botao:hover { 
+main div button:hover { 
     box-shadow: 0 0 10px 5px rgba(0, 255, 0, 0.6); 
 }
-.menu img{
-    height: 15vh; 
-    max-height: 200px;
-    object-fit: contain; /* Ajusta a imagem para caber dentro do contêiner */
+
+main div button img{
+    height: 80%;
+}
+main div button h2{
+    margin: 0;
+    height: 20%;
+    font-size: 10pt;
 }

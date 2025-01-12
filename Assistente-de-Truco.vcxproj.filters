@@ -15,30 +15,29 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="estatistica.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="janela.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="data.hpp">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="estatistica.hpp">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="janela.hpp">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="README.md">
       <Filter>Arquivos de Recurso</Filter>
+    </None>
+    <None Include="index.html">
+      <Filter>Arquivos de Origem</Filter>
+    </None>
+    <None Include="javascript\main.js">
+      <Filter>Arquivos de Origem</Filter>
+    </None>
+    <None Include="css\geral.css">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="css\menu.css">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="css\menuespecifico.css">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="css\menurotacaosuperior.css">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </None>
+    <None Include="css\old.estilo.css">
+      <Filter>Arquivos de Cabeçalho</Filter>
     </None>
   </ItemGroup>
 </Project>
