@@ -30,3 +30,13 @@
 #rotacao div button img{
     height: 100%;
 }
+
+/* Valores */
+#valores{
+    flex-direction: column;
+    /*gap: 0;*/
+}
+.linha{
+    height: 50%;
+    /*gap: 0;*/
+}

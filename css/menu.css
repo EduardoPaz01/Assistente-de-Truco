@@ -24,16 +24,19 @@ main div {
     display: flex;
     height: 80%; /* Compensa o h2 */
     width: auto;
-    gap: 50px;
+    gap: 100px;
     align-items: center;
     
 }
 main div button{
-    height: 100px;
-    width: 100px;
+    flex: 1;
+    height: 45%;
+    width: auto;
+    padding: 0;
     text-decoration: none;
     background: none;
     cursor: pointer;
+    justify-content: space-evenly;
     border: 0;
     position: relative; /* Para usar ::before */
     transition: all 0.3s ease; /* Adiciona uma transição suave para o efeito de hover */
@@ -58,10 +61,7 @@ main div button:hover {
 }
 
 main div button img{
-    height: 80%;
-}
-main div button h2{
-    margin: 0;
-    height: 20%;
-    font-size: 10pt;
+    width: auto;
+    max-height: 75%;
+    max-width: 100%;
 }

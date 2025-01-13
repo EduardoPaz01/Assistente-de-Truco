@@ -54,16 +54,30 @@ class Main {
         this.janela.updateMenuRotacaoSuperior(0)
 
         // Começa o laço de repetição
+        this.janela.limparInterface()
         this.continue()
     }
 
     continue(){
         // Enquanto você não mostrar suas três folhas e a manilha o jogo não começa
-        if(!comecoJogo){
-            if (Jogador[0].mao.lenght < 3){
-
-            }
+        // Verificando se a mão do jogador tem menos de 3 cartas ou se é nula
+        if (this.Jogadores[0].mao.length < 3 || this.Jogadores[0].mao.length == null) {            
+            // Chama o método coletarFolha e aguarda o resultado da Promise
+            this.janela.coletarFolha("Selecione sua folha", this.quantidade_jogadores).then((folha) => {
+                // Depois que a Promise for resolvida, adiciona a folha à mão do jogador
+                this.Jogadores[0].mao.push(folha)
+                alert('Folha adicionada com sucesso!')
+                this.continue()
+            }).catch((erro) => {
+                // Caso ocorra um erro (se houver, por exemplo, se o usuário cancelar a operação)
+                console.error("Erro ao coletar a folha:", erro)
+                alert("Houve um erro ao coletar sua folha.")
+            })
         }
+        else{
+            alert("mao prenchida")
+        }
+
     }
 }
 
@@ -103,14 +117,11 @@ class Janela {
         for(let i=0; i<2; i++){
             let butao = document.createElement("button")
             let imagem = document.createElement("img")
-            let descricao = document.createElement("h2")
-
             imagem.src = "imagens/"+((i%2==0)?"quatrojogadores":"seisjogadores")+".png"
-            descricao.innerHTML = (i%2==0)?"4 Jogadores":"6 Jogadores"
+            
+            butao.setAttribute("title", ((i%2==0)?"4 jogadores":"6 jogadores") )
             butao.onclick = ()=>{controle.setQuantidadeJogadores((i%2==0)?4:6)}
-
             butao.appendChild(imagem)
-            butao.appendChild(descricao)
             espaco_botoes.append(butao)
         }
         this.container.appendChild(pergunta)
@@ -211,17 +222,95 @@ class Janela {
         imgJogador.style.border = "1px solid orangered"
     }
 
-    // Coleta uma folha (passar ciclo sempre como 0)
-    coletarFolha(instrucao, ciclo){
-        //Mostra a seleção de naipe
-        if(ciclo === 0){
+    // Coleta uma folha
+    coletarFolha(instrucao, quantidade_jogadores) {
+        // Limpar a interface
+        this.limparInterface();
+    
+        // Retorna uma Promise para obter o naipe e o valor escolhidos
+        return new Promise((resolve, reject) => {
+            // Configura a pergunta
+            let pergunta = document.createElement("h1")
+            pergunta.innerHTML = instrucao;
             
-        }
-        //Mostra a seleção de valor
-        else{
-            let naipe = ciclo
-        }
+            // Configura os botões de seleção de naipe
+            let espaco_botoes = document.createElement("div")
+            
+            for (let i = 0; i < 4; i++) {
+                let butao = document.createElement("button")
+                let imagem = document.createElement("img")
+                let naipe
+    
+                switch (i) {
+                    case 0:
+                        imagem.src = "imagens/naipeouros.png"
+                        butao.setAttribute("title", "Naipe de Ouros")
+                        naipe = "o"
+                        break
+                    case 1:
+                        imagem.src = "imagens/naipeespadas.png"
+                        butao.setAttribute("title", "Naipe de Espadas")
+                        naipe = "e"
+                        break
+                    case 2:
+                        imagem.src = "imagens/naipecopas.png"
+                        butao.setAttribute("title", "Naipe de Copas")
+                        naipe = "c"
+                        break
+                    case 3:
+                        imagem.src = "imagens/naipepaus.png"
+                        butao.setAttribute("title", "Naipe de Paus")
+                        naipe = "p"
+                        break
+                }
+    
+                // Adiciona a ação ao botão de naipe
+                butao.onclick = () => {
+                    this.limparInterface()
+    
+                    // Mostra a nova pergunta
+                    let perguntaValores = document.createElement("h1")
+                    perguntaValores.innerHTML = "Escolha um valor:"
+                    this.container.appendChild(perguntaValores)
+    
+                    // Configura os botões de seleção de valor
+                    let espaco_botoes_valores = document.createElement("div")
+                    let linha_sup = document.createElement("div")
+                    let linha_inf = document.createElement("div")
+                    for (let j = 0; j < 10; j++) { // Criando 5 botões de valores
+                        let butaoValor = document.createElement("button")
+                        butaoValor.innerHTML = `Botao${j}` // O valor é de 1 a 5
+                        butaoValor.onclick = () => {
+                            // Quando o valor é escolhido, resolve a promise com a folha
+                            resolve(new Folha(naipe, j+1))
+                        }
+                        if(j%2==0)
+                            linha_sup.appendChild(butaoValor)
+                        else if(j%2==1)
+                            linha_inf.appendChild(butaoValor)
+                    }
+                    //Adiciona os botões ao espaço
+                    linha_sup.className = "linha"
+                    linha_inf.className = "linha"
+                    espaco_botoes_valores.id = "valores"
+                    espaco_botoes_valores.appendChild(linha_sup)
+                    espaco_botoes_valores.appendChild(linha_inf)
+    
+                    // Adiciona os botões de valor ao container
+                    this.container.appendChild(espaco_botoes_valores)
+                }
+    
+                // Adiciona o botão e a imagem ao botão de naipe
+                butao.appendChild(imagem)
+                espaco_botoes.appendChild(butao)
+            }
+    
+            // Adiciona a pergunta e os botões de naipe ao container
+            this.container.appendChild(pergunta)
+            this.container.appendChild(espaco_botoes)
+        })
     }
+
 }
 
 
