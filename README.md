@@ -2,7 +2,7 @@
 
 <p><strong>Link para pré-teste:</strong> <a href="https://eduardopaz01.github.io/Assistente-de-Truco/" target="_blank">Clique aqui para acessar</a></p>
 
-<p>Este projeto tem como objetivo fornecer uma ferramenta interativa para calcular as probabilidades de vitória de um jogador em uma partida de Truco, levando em consideração as condições conhecidas do jogo no momento. O assistente utiliza uma abordagem baseada nas cartas em mãos e nas regras específicas do jogo para gerar uma estimativa de chances de vitória.</p>
+<p>Este projeto pessoal tem como objetivo fornecer uma ferramenta interativa para calcular as probabilidades de vitória de um jogador em uma partida de Truco, levando em consideração as condições conhecidas do jogo no momento. O assistente utiliza uma abordagem baseada nas cartas em mãos e nas regras específicas do jogo para gerar uma estimativa de chances de vitória.</p>
 
 <h2>Tecnologias Utilizadas</h2>
 <ul>

@@ -1,12 +1,17 @@
  // Main
 class Main {
+
     constructor() { 
         this.quantidade_jogadores = 0
-        this.turno_atual = 0
-        this.janela = new Janela(" ")
         this.Jogadores = []
         this.Equipes = []
+
+        this.baralho = new Baralho()
+        
+        this.janela = new Janela(" ")
+        
         this.comecoJogo = false
+        this.turno_atual = 0
     }
 
     // Inicia a primeira tela
@@ -32,7 +37,6 @@ class Main {
         this.janela.gerarFolhasJogador()
 
         // Configura o menu rotação
-        this.janela.limparInterface()
         this.janela.gerarMenuRotacao(this.quantidade_jogadores)
 
     }
@@ -54,28 +58,35 @@ class Main {
         this.janela.updateMenuRotacaoSuperior(0)
 
         // Começa o laço de repetição
-        this.janela.limparInterface()
         this.continue()
     }
 
     continue(){
-        // Enquanto você não mostrar suas três folhas e a manilha o jogo não começa
         // Verificando se a mão do jogador tem menos de 3 cartas ou se é nula
         if (this.Jogadores[0].mao.length < 3 || this.Jogadores[0].mao.length == null) {            
-            // Chama o método coletarFolha e aguarda o resultado da Promise
-            this.janela.coletarFolha("Selecione sua folha", this.quantidade_jogadores).then((folha) => {
-                // Depois que a Promise for resolvida, adiciona a folha à mão do jogador
-                this.Jogadores[0].mao.push(folha)
-                alert('Folha adicionada com sucesso!')
+            this.janela.coletarFolha("Selecione sua folha", this.baralho).then((folha) => {
+                this.Jogadores[0].setNovaFolha(folha)
+                this.baralho.setFolha(folha)
+                this.janela.updateFolhasJogador(this.Jogadores[0].getMao())
                 this.continue()
-            }).catch((erro) => {
-                // Caso ocorra um erro (se houver, por exemplo, se o usuário cancelar a operação)
+            }).catch((erro) => { 
                 console.error("Erro ao coletar a folha:", erro)
-                alert("Houve um erro ao coletar sua folha.")
             })
         }
-        else{
-            alert("mao prenchida")
+        // Coleta a manilha
+        else if(this.baralho.getManilha()==null){
+            this.janela.coletarFolha("Selecione a manilha", this.baralho).then((folha) => {
+                this.baralho.setFolha(folha)
+                this.baralho.setManilha(folha)
+                this.janela.updateManilha(this.baralho.getManilha())
+                this.continue()
+            }).catch((erro) => { 
+                console.error("Erro ao coletar a folha:", erro)
+            })
+        }
+        // Ciclo do jogo
+        else {
+            alert("play")
         }
 
     }
@@ -95,6 +106,7 @@ class Janela {
     // Gera o menu das folhas do jogador
     gerarFolhasJogador(){
         const folhasJogador = document.getElementById("estado_sua_mao")
+        folhasJogador.replaceChildren()
         
         for(let i=0; i<3; i++){
             const folha = document.createElement("img")
@@ -104,9 +116,33 @@ class Janela {
         }
     }
 
+    // Atualiza o menu das folhas do jogador
+    updateFolhasJogador(mao_do_jogador){
+
+        let i=0
+        for(let folha of mao_do_jogador){
+            let folha_menu = document.getElementById(`folhasJogador${i}`)
+            folha_menu.src = folha.getCaminhoFolha()
+            i++
+        }
+
+    }
+
+    // Atualiza a impressão da manilha
+    updateManilha(folha){
+        const manilha = document.getElementById("manilha")
+        manilha.replaceChildren()
+
+        const img_manilha = document.createElement("img")
+        img_manilha.src = folha.getCaminhoFolha()
+        manilha.appendChild(img_manilha)
+        manilha.style.border = "5px solid purple"
+    }
+
     // Produz o menu de seleção de quantidade de jogadores
     gerarMenuQuantidadeJogadores(){
         this.container = document.getElementById("interface_principal")
+        this.limparInterface()
 
         // Configura a pergunta
         let pergunta = document.createElement("h1")
@@ -130,6 +166,10 @@ class Janela {
 
     // Corrija a janela de seleção da posição do jogador
     gerarMenuRotacao(quantidade_jogadores){
+        
+        //Limpa a tela
+        this.limparInterface()
+        
         // Configura a pergunta
         let pergunta = document.createElement("h1")
         pergunta.innerHTML = "Qual a sua posição?"
@@ -166,6 +206,12 @@ class Janela {
         //Adiciona a interface
         this.container.append(pergunta)
         this.container.appendChild(espaco_botoes)
+    }
+
+    // Atualiza o menu de rotação por rodada
+    updateMenuRotacaoSuperior(posicao_do_jogo){
+        let imgJogador = document.getElementById(`user_pos${posicao_do_jogo}`)
+        imgJogador.style.border = "1px solid orangered"
     }
 
     // Formate o menu de rotacao superior pela primeira vez
@@ -205,6 +251,7 @@ class Janela {
 
     }
 
+    // Gera o menu de controle de folhas jogadas
     gerarMenuInferior(quantidade_jogadores){
         const menuInferior = document.getElementById("rodape")
         
@@ -216,14 +263,8 @@ class Janela {
         }
     }
 
-    // Atualiza o menu de rotação por rodada
-    updateMenuRotacaoSuperior(posicao_do_jogo){
-        let imgJogador = document.getElementById(`user_pos${posicao_do_jogo}`)
-        imgJogador.style.border = "1px solid orangered"
-    }
-
     // Coleta uma folha
-    coletarFolha(instrucao, quantidade_jogadores) {
+    coletarFolha(instrucao, baralho) {
         // Limpar a interface
         this.limparInterface();
     
@@ -269,26 +310,29 @@ class Janela {
                     this.limparInterface()
     
                     // Mostra a nova pergunta
-                    let perguntaValores = document.createElement("h1")
-                    perguntaValores.innerHTML = "Escolha um valor:"
-                    this.container.appendChild(perguntaValores)
+                    this.container.appendChild(pergunta)
     
                     // Configura os botões de seleção de valor
                     let espaco_botoes_valores = document.createElement("div")
                     let linha_sup = document.createElement("div")
                     let linha_inf = document.createElement("div")
-                    for (let j = 0; j < 10; j++) { // Criando 5 botões de valores
+
+                    // Limita para aparecer apenas as folhas disponíveis
+                    const folhas_disponiveis = baralho.getfolhas(naipe)
+                    let j=0
+                    for(let folha of folhas_disponiveis){
                         let butaoValor = document.createElement("button")
-                        butaoValor.innerHTML = `Botao${j}` // O valor é de 1 a 5
-                        butaoValor.onclick = () => {
-                            // Quando o valor é escolhido, resolve a promise com a folha
-                            resolve(new Folha(naipe, j+1))
-                        }
-                        if(j%2==0)
+                        const imagem = document.createElement("img")
+                        imagem.src = folha.getCaminhoFolha()
+                        butaoValor.appendChild(imagem)
+                        butaoValor.onclick = () => { resolve(folha) }
+                        if(j < folhas_disponiveis.length/2)
                             linha_sup.appendChild(butaoValor)
-                        else if(j%2==1)
+                        else if(j >= folhas_disponiveis.length/2)
                             linha_inf.appendChild(butaoValor)
+                        j++
                     }
+
                     //Adiciona os botões ao espaço
                     linha_sup.className = "linha"
                     linha_inf.className = "linha"
@@ -316,6 +360,7 @@ class Janela {
 
 
 class Folha{
+
     constructor(naipe, valor) {
         this.naipe = naipe
         this.valor = valor
@@ -328,9 +373,51 @@ class Folha{
 }
 
 class Baralho {
+
     constructor() {
         this.folhas = []
+        this.manilha = null
+
+        const naipes = ["o", "e", "c", "p"]
+        for (let i = 0; i < 10; i++) {
+            const valor = correcaoSequencia(i)
+            for (let j = 0; j < naipes.length; j++) {
+                const naipe = naipes[j]
+                const folha = new Folha(naipe, valor)
+                this.folhas.push(folha)
+            }
+        }
     }
+
+    setManilha(folha){
+        this.manilha = folha
+    }
+    getManilha(folha){
+        return this.manilha
+    }
+
+    setFolha(nova_folha){
+        const index = this.folhas.findIndex(folha => folha.naipe == nova_folha.naipe && folha.valor == nova_folha.valor)
+        if (index !== -1){ 
+            this.folhas.splice(index, 1)
+        }
+    }
+    
+    getfolhas(naipe){
+        if (naipe == null)
+            return this.folhas
+        
+        else {
+            let folhas_retorno = []
+            for (let folha of this.folhas) {
+                if (folha.naipe == naipe) {
+                    folhas_retorno.push(folha)
+                }
+            }
+            return folhas_retorno
+        }
+    }
+    
 }
 
 
@@ -342,8 +429,12 @@ class Jogador {
         this.mao = []
     }
 
-    setNovaFolha(folha){
-        this.hand.push(folha)
+    setNovaFolha( nova_folha ){
+        this.mao.push( nova_folha )
+    }
+
+    getMao(){
+        return this.mao
     }
 
     setName(name){
@@ -353,9 +444,7 @@ class Jogador {
         this.posicao = posicao
     }
 
-    mostrarMao(){
-
-    }
+    
 }
 
 class Equipe {

@@ -23,15 +23,15 @@ main h1 {
 main div {
     display: flex;
     height: 80%; /* Compensa o h2 */
-    width: auto;
-    gap: 100px;
+    width: 100%;
     align-items: center;
     
 }
 main div button{
     flex: 1;
-    height: 45%;
+    height: 35%;
     width: auto;
+    margin: 20px;
     padding: 0;
     text-decoration: none;
     background: none;
