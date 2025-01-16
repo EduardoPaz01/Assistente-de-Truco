@@ -41,3 +41,66 @@
 .linha button{
     height: 80%;
 }
+
+/* Seleção de Folha Para Jogar */
+#seleção_folha{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    padding: 20px;
+    color: #343a40;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+#seleção_folha #imagem{
+    width: 35%;
+    height: auto;
+    margin-right: 10px;
+    border-radius: 8px;
+    border: 2px solid #6c757d;
+}
+#seleção_folha #imagem img{
+    width: 100%;
+    height: auto;
+    
+}
+#seleção_folha #estatisticas_folha{
+    width: 65%;
+    height: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    flex-direction: column;
+    box-sizing: border-box;
+    border: 2px solid #6c757d;
+}
+#seleção_folha #estatisticas_folha h2 {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    padding: 10px;
+    font-size: 1.5em;
+    color: #495057;
+    align-items: center;
+    margin-block-end: 0;
+    margin-block-start: 0;
+    border-bottom: 1px solid #dee2e6;
+}
+#seleção_folha #estatisticas_folha h2 span.ti{
+    width: 20%;
+}
+#seleção_folha #estatisticas_folha h2 span.att{
+    width: 80%;
+    font-weight: bold;
+    text-align: center;
+}
+#seleção_folha #estatisticas_folha #controle_botoes{
+    height: 25%;
+    flex-direction: row;
+}
+#seleção_folha #estatisticas_folha #controle_botoes button {
+    height: 80%;
+    font-size: 1em;
+    color: #6c757d;
+    border-radius: 5px; 
+    border: 1px solid #dee2e6;
+}
