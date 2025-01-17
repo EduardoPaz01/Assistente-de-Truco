@@ -60,8 +60,10 @@
     border: 2px solid #6c757d;
 }
 #seleção_folha #imagem img{
-    width: 100%;
+    width: auto;
     height: auto;
+    max-width: 100%;
+    max-height: 100%;
     
 }
 #seleção_folha #estatisticas_folha{

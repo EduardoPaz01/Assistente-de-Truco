@@ -6,6 +6,7 @@ class Main {
     #Jogadores
     #Equipes
     #baralho
+    #mesa
     #janela
     #comecoJogo
     #turno_atual
@@ -19,6 +20,7 @@ class Main {
         this.#Jogadores = []
         this.#Equipes = []
         this.#baralho = new Baralho()
+        this.#mesa = new Mesa()
         this.#janela = new Janela()
         this.#comecoJogo = false
         this.#turno_atual = 0
@@ -41,13 +43,21 @@ class Main {
      * Função que verifica e executa as etapas preparatórias para o jogo.
      */
     verificarEtapaPreparacao() {
-        if (!this.#quantidade_jogadores) {
+
+        // Coleta a quantidade de jogadores
+        if (!this.#quantidade_jogadores) 
             this.definirQuantidadeJogadores()
-        } else if (!this.#Jogadores[0].obterPosicao) {
+        
+        //Coleta a posição do usuário
+        else if (this.#Jogadores[0].obterPosicao == null) 
             this.definirPosicaoJogador()
-        } else if (this.#Jogadores[0].obterMao.length < 3 || !this.#Jogadores[0].obterMao.length) {
+        
+        // Coleta as 3 folhas do jogador
+        else if (this.#Jogadores[0].obterMao.length < 3 || !this.#Jogadores[0].obterMao.length)
             this.definirFolhaJogador()
-        } else if (!this.#baralho.obterManilha) {
+        
+        // Coleta a manilha e ativa o looping principal
+        else if (!this.#mesa.obterManilha) {
             this.definirManilhaJogo()
             this.#comecoJogo = true
         }
@@ -57,9 +67,24 @@ class Main {
      * Função que inicia o ciclo de jogo.
      */
     iniciarJogo() {
+        
+        // Limpa a mesa quando estiver non último turno
+        if(this.#turno_atual === this.#quantidade_jogadores){
+            this.#turno_atual = 0
+            this.#mesa.limparMesa()
+            this.#janela.atualizarFolhaMenuInferior( this.#mesa , this.#quantidade_jogadores )
+        }
 
-        alert("Inicio do Jogo")
-        this.usuarioJogarfolha()
+        // Jogador joga uma folha
+        if(this.#turno_atual === this.#Jogadores[0].obterPosicao)
+            this.usuarioJogarfolha(this.#turno_atual)
+            
+        // Outro jogador joga uma folha
+        else if(this.#turno_atual !== this.#Jogadores[0].obterPosicao)
+            this.outroJogarFolha(this.#turno_atual)
+            
+        // Avança para o próximo turno
+        this.#turno_atual++
         
     }
     
@@ -81,7 +106,7 @@ class Main {
             // Cria os novos jogadores e adiciona eles nas equipes
             for(let i=0; i<this.#quantidade_jogadores; i++){
                 this.#Jogadores.push(new Jogador())
-                this.#Equipes[i%2].setJogador=this.#Jogadores[i]
+                this.#Equipes[i%2].definirJogador(this.#Jogadores[i])
             }
     
             // Configura o menu inferior de controle de cartas jogadas
@@ -145,8 +170,8 @@ class Main {
             let folha = await this.#janela.coletarFolha("Selecione sua folha", this.#baralho)
 
             // Configura a entrada da folha
-            this.#Jogadores[0].definirFolhaMao = folha
-            this.#baralho.definirFolha = folha
+            this.#Jogadores[0].definirFolhaMao(folha)
+            this.#baralho.definirFolha( folha )
             this.#janela.atualizarFolhasJogador(this.#Jogadores[0].obterMao)
 
             // Retoma o laço principal
@@ -168,9 +193,9 @@ class Main {
             let folha = await this.#janela.coletarFolha("Selecione a manilha", this.#baralho)
             
             // Configura a manilha
-            this.#baralho.definirFolha = folha
-            this.#baralho.definirManilha = folha
-            this.#janela.atualizarManilha(this.#baralho.obterManilha)
+            this.#baralho.definirFolha( folha )
+            this.#mesa.definirManilha = folha
+            this.#janela.atualizarManilha(this.#mesa.obterManilha)
 
             // Retoma o laço
             this.configuracoesIniciais()
@@ -180,8 +205,11 @@ class Main {
 
     }
 
-    //EM MANUTENÇÃO
-    async usuarioJogarfolha(){
+    /**
+     * Função para o usuário jogar um folha 
+     * @param {number} posicao_do_jogo Vez de quem vai jogar agora 
+     */
+    async usuarioJogarfolha(posicao_do_jogo){
 
         try{
 
@@ -192,13 +220,43 @@ class Main {
                 folhas.push( novaFolha )
             }
 
+            // Retornar a folha selecionada
             let folha_jogada = await this.#janela.jogarFolha(folhas)
-            console.log(folha_jogada)
 
+            // Atualiza os atributos
+            this.#Jogadores[0].jogarFolhaJogador( folha_jogada )
+            this.#janela.atualizarFolhasJogador(this.#Jogadores[0].obterMao)
+            this.#baralho.definirFolha( folha_jogada )
+            this.#mesa.definirFolha( folha_jogada )
+            this.#janela.atualizarFolhaMenuInferior( this.#mesa , this.#quantidade_jogadores )
+            
+            // Ativa a recorrência do looping do jogo
             this.iniciarJogo()
-
         }catch(erro){
             console.error("Não foi possível jogar folha:", erro)
+        }
+
+    }
+
+    /**
+     * Função para outro jogador jogar um folha 
+     * @param {number} posicao_do_jogo Vez de quem vai jogar agora 
+     */
+    async outroJogarFolha(posicao_do_jogo){
+
+        try{
+            // Recebe a folha a ser jogada
+            let folha_jogada = await this.#janela.coletarFolha("Selecione a folha jogada", this.#baralho)
+
+            // Atualiza os atributos
+            this.#baralho.definirFolha( folha_jogada )
+            this.#mesa.definirFolha( folha_jogada )
+            this.#janela.atualizarFolhaMenuInferior( this.#mesa , this.#quantidade_jogadores )
+
+            // Ativa a recorrência do looping do jogo
+            this.iniciarJogo()
+        }catch(erro){
+            console.error("Não foi possível jogar folha:",erro)
         }
 
     }
@@ -263,6 +321,7 @@ class Janela {
      */
     mostrarMenuInferior(quantidade_jogadores){
         const menuInferior = document.getElementById("rodape")
+        menuInferior.replaceChildren()
         
         for(let i=0; i<quantidade_jogadores; i++){
             const folha = document.createElement("img")
@@ -270,6 +329,29 @@ class Janela {
             folha.id = `folha_pilha${i}`
             menuInferior.appendChild(folha)
         }
+    }
+
+    /**
+     * Define uma nova folha no menu inferior
+     * @param {Mesa} mesa - Mesa a ser impressa
+     */
+    atualizarFolhaMenuInferior( mesa, quantidade_jogadores ) {
+        const menuInferior = document.getElementById("rodape");
+
+        let i=0
+        // Posiciona as folhas disponíveis
+        for(let folha of mesa.obterFolhas){
+            const folha_imagem = document.getElementById(`folha_pilha${i}`);
+            folha_imagem.src = folha.obterCaminhoFolha
+            i++
+        }
+        // Completa com folhas vazias
+        while(i<quantidade_jogadores){
+            const folha_imagem = document.getElementById(`folha_pilha${i}`);
+            folha_imagem.src = "imagens/folhas/vazia.png"
+            i++
+        } 
+        
     }
 
     /**
@@ -406,34 +488,16 @@ class Janela {
             // Configura os botões de seleção de naipe
             let espaco_botoes = document.createElement("div")
             
-            for (let i = 0; i < 4; i++) {
+            // Analisa os naipes disponíveis
+            let naipes_disponiveis = baralho.obterNaipes()
+            // Preenche os botões
+            for(let naipe of naipes_disponiveis){
+
                 let butao = document.createElement("button")
                 let imagem = document.createElement("img")
-                let naipe
-    
-                switch (i) {
-                    case 0:
-                        imagem.src = "imagens/naipeouros.png"
-                        butao.setAttribute("title", "Naipe de Ouros")
-                        naipe = "o"
-                        break
-                    case 1:
-                        imagem.src = "imagens/naipeespadas.png"
-                        butao.setAttribute("title", "Naipe de Espadas")
-                        naipe = "e"
-                        break
-                    case 2:
-                        imagem.src = "imagens/naipecopas.png"
-                        butao.setAttribute("title", "Naipe de Copas")
-                        naipe = "c"
-                        break
-                    case 3:
-                        imagem.src = "imagens/naipepaus.png"
-                        butao.setAttribute("title", "Naipe de Paus")
-                        naipe = "p"
-                        break
-                }
-    
+                imagem.src = naipe.src
+                butao.setAttribute("title", naipe.descricao)
+
                 // Adiciona a ação ao botão de naipe
                 butao.onclick = () => {
                     this.limparInterface()
@@ -447,7 +511,7 @@ class Janela {
                     let linha_inf = document.createElement("div")
 
                     // Limita para aparecer apenas as folhas disponíveis
-                    const folhas_disponiveis = baralho.obterfolhas(naipe)
+                    const folhas_disponiveis = baralho.obterfolhas(naipe.naipe)
                     let j=0
                     for(let folha of folhas_disponiveis){
                         let butaoValor = document.createElement("button")
@@ -476,8 +540,9 @@ class Janela {
                 // Adiciona o botão e a imagem ao botão de naipe
                 butao.appendChild(imagem)
                 espaco_botoes.appendChild(butao)
+
             }
-    
+
             // Adiciona a pergunta e os botões de naipe ao container
             this.#container.appendChild(pergunta)
             this.#container.appendChild(espaco_botoes)
@@ -491,9 +556,16 @@ class Janela {
     atualizarFolhasJogador(mao_do_jogador){
 
         let i=0
+        // Posiciona as folhas disponíveis
         for(let folha of mao_do_jogador){
             let folha_menu = document.getElementById(`folhasJogador${i}`)
             folha_menu.src = folha.obterCaminhoFolha
+            i++
+        }
+        // Completa com folhas vazias
+        while(i<3){
+            let folha_menu = document.getElementById(`folhasJogador${i}`)
+            folha_menu.src = "imagens/folhas/vazia.png"
             i++
         }
 
@@ -705,7 +777,6 @@ class FolhaCompleta extends Folha {
 class Baralho {
     // Privados
     #folhas
-    #manilha
 
     /**
      * Construtor da classe Baralho.
@@ -713,7 +784,6 @@ class Baralho {
      */
     constructor() {
         this.#folhas = []
-        this.#manilha = null
 
         const naipes = ["o", "e", "c", "p"]
         for (let i = 0; i < 10; i++) {
@@ -727,30 +797,30 @@ class Baralho {
     }
 
     /**
-     * Define a manilha do baralho.
-     * @param {Folha} folha - A folha a ser definida como manilha.
-     */
-    set definirManilha(folha) {
-        this.#manilha = folha
-    }
-
-    /**
-     * Obtém a manilha do baralho.
-     * @returns {Folha|null} A manilha do baralho ou null se não definida.
-     */
-    get obterManilha() {
-        return this.#manilha
-    }
-
-    /**
      * Define a folha que foi jogada, removendo-a do baralho.
      * @param {Folha} nova_folha - A folha a ser removida do baralho.
      */
-    set definirFolha(nova_folha) {
+    definirFolha(nova_folha) {
         const index = this.#folhas.findIndex(folha => folha.obterNaipe === nova_folha.obterNaipe && folha.obterValor === nova_folha.obterValor)
         if (index !== -1) {
             this.#folhas.splice(index, 1)
         }
+    }
+
+    /**
+     * Obtém todos os naipes existentes nas folhas do baralho, na ordem: "o", "e", "c", "p"
+     * @returns {[{naipe: string, src: string, descricao: string}]} Um array de objetos representando os naipes existentes com seus atributos, na ordem especificada
+     */
+    obterNaipes() {
+        const naipes = {
+            "o": { naipe: "o", src: "imagens/naipeouros.png", descricao: "Naipe de Ouros" },
+            "e": { naipe: "e", src: "imagens/naipeespadas.png", descricao: "Naipe de Espadas" },
+            "c": { naipe: "c", src: "imagens/naipecopas.png", descricao: "Naipe de Copas" },
+            "p": { naipe: "p", src: "imagens/naipepaus.png", descricao: "Naipe de Paus" }
+        }
+        const naipes_existentes = new Set(this.#folhas.map(({obterNaipe}) => obterNaipe))
+        const ordem = ["o", "e", "c", "p"]
+        return ordem.filter(naipe => naipes_existentes.has(naipe)).map(naipe => naipes[naipe])
     }
 
     /**
@@ -771,6 +841,63 @@ class Baralho {
             return folhas_retorno
         }
     }
+
+}
+
+
+class Mesa{
+
+    // Privados
+    #folhas
+    #manilha
+
+    /**
+     * Construtor da classe Mesa
+     */
+    constructor() {
+        this.#folhas = []
+        this.#manilha = null
+    }
+
+    /**
+     * Define a manilha do baralho.
+     * @param {Folha} folha - A folha a ser definida como manilha.
+     */
+    set definirManilha(folha) {
+        this.#manilha = folha
+    }
+
+    /**
+     * Obtém a manilha do baralho.
+     * @returns {Folha|null} A manilha do baralho ou null se não definida.
+     */
+    get obterManilha() {
+        return this.#manilha
+    }
+
+    /**
+     * Obter o array de folhas que estão na mesa
+     * @returns {[Folha]} Array das folhas que estão na mesa
+     */
+    get obterFolhas(){
+        return this.#folhas
+    }
+
+    /**
+     * Define a folha que foi jogada, removendo-a do baralho.
+     * @param {Folha} nova_folha - A folha a ser removida do baralho.
+     */
+    definirFolha(nova_folha) {
+        this.#folhas.push(nova_folha)
+    }
+
+    /**
+     * Limpa a mesa para começar uma nova rodada
+     */
+    limparMesa(){
+        this.#folhas = []
+    }
+
 }
 
 
@@ -785,14 +912,6 @@ class Jogador {
         this.#nome = null
         this.#posicao = null
         this.#mao = []
-    }
-
-    /**
-     * Define uma nova folha na mão do jogador.
-     * @param {Folha} nova_folha - A folha a ser adicionada à mão do jogador.
-     */
-    set definirFolhaMao(nova_folha) {
-        this.#mao.push(nova_folha)
     }
 
     /**
@@ -834,6 +953,25 @@ class Jogador {
     get obterPosicao() {
         return this.#posicao
     }
+
+    /**
+     * Define uma nova folha na mão do jogador.
+     * @param {Folha} nova_folha - A folha a ser adicionada à mão do jogador.
+     */
+    definirFolhaMao(nova_folha) {
+        this.#mao.push(nova_folha)
+    }
+
+    /**
+     * Joga uma folha da mão do jogador
+     * @param {Folha} folha_jogada - A folha a ser adicionada à mão do jogador.
+     */
+    jogarFolhaJogador(folha_jogada){
+        const index = this.#mao.findIndex(folha => folha.obterNaipe === folha_jogada.obterNaipe && folha.obterValor === folha_jogada.obterValor)
+        if (index !== -1) 
+            this.#mao.splice(index, 1)
+        
+    }
 }
 
 
@@ -872,14 +1010,6 @@ class Equipe {
     }
 
     /**
-     * Adiciona um jogador à equipe.
-     * @param {Jogador} novoJogador - O jogador a ser adicionado à equipe.
-     */
-    set definirJogador(novoJogador) {
-        this.#Jogadores.push(novoJogador)
-    }
-
-    /**
      * Obtém o nome da equipe.
      * @returns {string} O nome da equipe.
      */
@@ -901,6 +1031,14 @@ class Equipe {
      */
     get obterJogadores() {
         return this.#Jogadores
+    }
+
+    /**
+     * Adiciona um jogador à equipe.
+     * @param {Jogador} novoJogador - O jogador a ser adicionado à equipe.
+     */
+    definirJogador(novoJogador) {
+        this.#Jogadores.push(novoJogador)
     }
 }
 
@@ -924,7 +1062,7 @@ function correcaoSequencia(indice){
 function correcaoRotacao(indice, quantidade_jogadores){
 
     if( indice === 0) 
-        return "0"
+        return 0
     else if( indice>0 && indice<quantidade_jogadores/2) 
         return (quantidade_jogadores - indice)
     else if( indice>=quantidade_jogadores/2) 
