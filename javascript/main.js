@@ -1,4 +1,3 @@
-// Main
 class Main {
 
     // Privates
@@ -31,11 +30,15 @@ class Main {
      * Realiza diversas verificações e interações com a janela (UI) e objetos internos.
      */
     configuracoesIniciais() {
-        if (this.#comecoJogo) {
-            this.iniciarJogo()  // Se o jogo já começou, inicia o ciclo de jogo
-        }
-        else if(!this.#comecoJogo){
-            this.verificarEtapaPreparacao()  // Caso contrário, verifica as etapas preparatórias
+
+        // Verifica se já há tudo que é necessário para iniciar o jogo
+        if(!this.#comecoJogo)
+            this.verificarEtapaPreparacao()
+        
+        // Inicia o jogo
+        else if (this.#comecoJogo) {
+            this.#janela.atualizarPlacar(0,0)
+            this.iniciarJogo() 
         }
     }
     
@@ -68,10 +71,11 @@ class Main {
      */
     iniciarJogo() {
         
-        // Limpa a mesa quando estiver non último turno
+        // Limpa a mesa quando estiver no último turno e atualiza o placar
         if(this.#turno_atual === this.#quantidade_jogadores){
+            this.controle_pontuacao()
             this.#turno_atual = 0
-            this.#mesa.limparMesa()
+            this.#mesa.limparMesa() 
             this.#janela.atualizarFolhaMenuInferior( this.#mesa , this.#quantidade_jogadores )
         }
 
@@ -259,6 +263,42 @@ class Main {
             console.error("Não foi possível jogar folha:",erro)
         }
 
+    }
+
+    /**
+     * Controla a pontuação
+     */
+    controle_pontuacao(){
+        // Obtem as folhas da mesa
+        let folhas = this.#mesa.obterFolhas
+
+        console.log(folhas)
+
+        let maior_folha = folhas[0];
+        let indice_maior_folha = 0;
+
+        // Analisa qual é a folha mais forte
+        folhas.forEach((folha, i) => {
+            const valorFolha = folha.obterValor;
+            const valorMaiorFolha = maior_folha.obterValor;
+            
+            if (valorMaiorFolha < 4 && valorFolha < 4 && valorFolha > valorMaiorFolha) {
+                maior_folha = folha;
+                indice_maior_folha = i;
+            } else if (valorMaiorFolha >= 4) {
+                if (valorFolha < 4 || valorFolha > valorMaiorFolha) {
+                    maior_folha = folha;
+                    indice_maior_folha = i;
+                }
+            }
+        });
+
+        // Analiza que equipe pontuou
+        let equipe_vencedora = indice_maior_folha%2
+        this.#Equipes[equipe_vencedora].somarPontuacao()
+
+        // Atualia o placar
+        this.#janela.atualizarPlacar(this.#Equipes[0].obterPontuacao, this.#Equipes[1].obterPontuacao)
     }
 
 }
@@ -681,6 +721,26 @@ class Janela {
         
     }
 
+    /**
+     * Atualiza a exibição do placar
+     * @param {number} pontuacaoAzul Entrada da pontuação atual do time azul
+     * @param {number} pontuacaoVermelho Entrada da pontuação atual do time vermelho
+     */
+    atualizarPlacar(pontuacaoAzul, pontuacaoVermelho) {
+        let placar = document.getElementById("placar")
+        placar.style.display = "flex"
+        
+        let time_azul = document.getElementById("pontuacao_azul")
+        time_azul.innerText = pontuacaoAzul
+        let time_vermelho = document.getElementById("pontuacao_vermelho")
+        time_vermelho.innerText = pontuacaoVermelho
+
+        let tamanho_tela = window.innerWidth
+        let tamanho_placar = tamanho_tela - 127
+        placar.style.left = `${tamanho_placar}px`
+    }
+
+
 }
 
 
@@ -1002,14 +1062,6 @@ class Equipe {
     }
 
     /**
-     * Define a pontuação da equipe.
-     * @param {number} pontuacao - A pontuação a ser atribuída à equipe.
-     */
-    set definirPontuacao(pontuacao) {
-        this.#pontuacao = pontuacao
-    }
-
-    /**
      * Obtém o nome da equipe.
      * @returns {string} O nome da equipe.
      */
@@ -1039,6 +1091,13 @@ class Equipe {
      */
     definirJogador(novoJogador) {
         this.#Jogadores.push(novoJogador)
+    }
+
+    /**
+     * Adiciona um ponto para equipe
+     */
+    somarPontuacao() {
+        this.#pontuacao++
     }
 }
 

@@ -106,3 +106,31 @@
     border-radius: 5px; 
     border: 1px solid #dee2e6;
 }
+
+#placar{
+    display: none;
+    position: absolute;
+    top: 15%;
+    /*left:100% - 110px; inserir por js*/
+    margin: 10px;
+    width: 100px;
+    height: 40px;
+    flex-direction: row;
+    align-items: center;
+    background-color: white;
+    color: #6c757d;
+    border-radius: 5px; 
+    border: 1px solid #dee2e6;
+
+}
+#placar h3{
+    width: 33%;
+    text-align: center;
+}
+#placar h3#pontuacao_azul{
+    color:#6c75ff;
+}
+#placar h3#pontuacao_vermelho{
+    color:#ff757d;
+}
+

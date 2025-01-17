@@ -9,6 +9,7 @@ main {
     flex-direction: column;
     justify-content: center;
     background-color: white;
+    color: #6c757d;
 }
 
 main h1 {
