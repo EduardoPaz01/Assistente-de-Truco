@@ -26,7 +26,6 @@ main div {
     height: 80%; /* Compensa o h2 */
     width: 100%;
     align-items: center;
-    
 }
 main div button{
     flex: 1;

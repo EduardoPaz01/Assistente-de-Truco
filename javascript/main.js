@@ -88,6 +88,7 @@ class Main {
             this.outroJogarFolha(this.#turno_atual)
             
         // Avança para o próximo turno
+        this.#janela.atualizarMenuRotacaoSuperior(this.#turno_atual, this.#quantidade_jogadores)
         this.#turno_atual++
         
     }
@@ -153,7 +154,7 @@ class Main {
 
             // Configura o mini menu
             this.#janela.mostrarMenuRotacaoSuperior(posicao_jogador, this.#quantidade_jogadores)
-            this.#janela.atualizarMenuRotacaoSuperior(0)
+            this.#janela.atualizarMenuRotacaoSuperior(0, this.#quantidade_jogadores)
 
             // Começa o laço de repetição
             this.configuracoesIniciais()
@@ -293,7 +294,7 @@ class Main {
             }
         });
 
-        // Analiza que equipe pontuou
+        // Analiza qual equipe pontuou
         let equipe_vencedora = indice_maior_folha%2
         this.#Equipes[equipe_vencedora].somarPontuacao()
 
@@ -495,18 +496,35 @@ class Janela {
         menu_rot.appendChild(img)
         menu_rot.appendChild(linha_inf)
 
+        // Define as cores dos times
+        for(let i=0; i<quantidade_jogadores; i++){
+            let imagem = document.getElementById(`user_pos${i}`)
+            imagem.style.backgroundColor = ((i % 2 == 0) ? "rgba(0,0,255,.25)" : "rgba(255,0,0,.25)")
+            imagem.style.boxShadow = "0 0 5px 1px " + ((i % 2 == 0) ? "rgba(0,0,255,.2)" : "rgba(255,0,0,.2)")
+        }
         // Marca a posição do jogador
         let imgJogador = document.getElementById(`user_pos${posicao_do_jogador}`)
-        imgJogador.style.backgroundColor = "yellow"
+        //imgJogador.style.backgroundColor = "rgba(255,255,0,.5)"
+        imgJogador.style.boxShadow = "0 0 5px 1px rgba(255,255,0,.5)"
     }
 
     /**
      * Atualiza o menu de rotação por rodada
      * @param {number} posicao_do_jogo Posição atual do jogo 
      */
-    atualizarMenuRotacaoSuperior(posicao_do_jogo){
-        let imgJogador = document.getElementById(`user_pos${posicao_do_jogo}`)
-        imgJogador.style.border = "1px solid orangered"
+    atualizarMenuRotacaoSuperior(posicao_do_jogo, quantidade_jogadores){
+
+        for(let i=0; i<quantidade_jogadores; i++){
+            if(i!==posicao_do_jogo){
+                let img = document.getElementById(`user_pos${i}`)
+                img.style.border = "none"
+            }
+            else if(i===posicao_do_jogo){
+                let img = document.getElementById(`user_pos${i}`)
+                img.style.border = "1px solid white"
+            }
+        }
+        
     }
 
     /**
